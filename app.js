@@ -3,7 +3,7 @@
 'use strict';
 var C=window.Core,L=window.Ledger,P=window.Plan,F=window.Footprint,V=window.Views,LV=window.LedgerViews,Ex=window.Exporter;
 var esc=C.esc;
-var state={view:'home',ledgerTab:'home',memberDetail:null,query:'',filter:'全部',galleryCat:'全部',mapMode:'plan',
+var state={view:'home',ledgerTab:'shared',memberDetail:null,query:'',filter:'全部',galleryCat:'全部',mapMode:'plan',
   openDays:{},filters:{},drag:null};
 var DAYS=[];
 function days(){return DAYS}
@@ -29,9 +29,10 @@ function render(){
     case 'packing':html=V.packing();break;
     case 'mine':html=V.mine(DAYS);break;
     case 'ledger':
-      var tabs=[['home','账本首页'],['expenses','消费明细'],['my','我的费用'],['members','成员账单'],['settlement','AA结算'],['stats','消费统计']];
+      var tabs=[['shared','多人AA共享'],['home','账本首页'],['expenses','消费明细'],['my','我的费用'],['members','成员账单'],['settlement','AA结算'],['stats','消费统计']];
       html='<div class="tabs">'+tabs.map(function(t){return '<button class="'+(state.ledgerTab===t[0]?'active':'')+'" data-ledger-tab="'+t[0]+'">'+t[1]+'</button>'}).join('')+'</div>';
       switch(state.ledgerTab){
+        case 'shared':html+=window.AA.html();break;
         case 'home':html+=LV.ledgerHome(DAYS);break;
         case 'expenses':html+=LV.expensesView(state.filters);break;case 'my':html+=LV.myView();break;
         case 'members':html+=state.memberDetail?LV.memberDetail(state.memberDetail):LV.membersView();break;

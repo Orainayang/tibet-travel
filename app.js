@@ -16,6 +16,8 @@ function render(){
   var main=document.getElementById('main'),html='';
   switch(state.view){
     case 'home':html=V.home(DAYS);break;
+    case 'guide':html=V.guide();break;
+    case 'safety':html=V.safety(DAYS);break;
     case 'modules':html=V.modules(DAYS);break;
     case 'itinerary':html=V.itinerary(DAYS);break;
     case 'footprint':html=V.footprint(DAYS);break;
@@ -276,9 +278,9 @@ document.addEventListener('drop',function(e){
 });
 
 function initNav(){
-  document.getElementById('mobileNav').innerHTML=[['home','首页','⌂'],['itinerary','行程','🗓'],['footprint','足迹','👣'],['ledger','账本','¥'],['mine','我的','☰']]
+  document.getElementById('mobileNav').innerHTML=[['home','首页','⌂'],['itinerary','行程','🗓'],['guide','攻略','◇'],['safety','保障','△'],['ledger','账本','¥'],['footprint','足迹','👣']]
    .map(function(x){return '<button data-nav="'+x[0]+'"><span class="ico">'+x[2]+'</span>'+x[1]+'</button>'}).join('');
-  document.getElementById('desktopNav').innerHTML=[['home','首页'],['modules','模块'],['itinerary','行程'],['footprint','足迹'],['train','Z165'],['gallery','图库'],['map','地图'],['altitude','海拔'],['budget','预算'],['ledger','账本'],['packing','清单'],['mine','我的']]
+  document.getElementById('desktopNav').innerHTML=[['home','首页'],['itinerary','每日行程'],['guide','景点攻略'],['safety','旅行保障'],['ledger','旅行账本'],['footprint','我的足迹']]
    .map(function(x){return '<button data-nav="'+x[0]+'">'+x[1]+'</button>'}).join('');
 }
 window.App={state:state,days:days,record:record,isOpen:isOpen,go:go,render:render,

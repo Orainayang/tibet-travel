@@ -16,6 +16,17 @@ function slotHTML(slots){
 function photoCredit(key){var ps=C.photos(key);if(!ps.length)return '';
   return '<div class="tiny muted" style="margin-top:5px">参考图片：'+esc(ps[0].title)+' · '+esc(ps[0].author)+' · '+esc(ps[0].license)+'</div>'}
 
+/* Final planning dashboard: derived from the current editable itinerary. */
+function table(headers,rows){return '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13px"><thead><tr>'+headers.map(function(x){return '<th style="text-align:left;padding:10px;border-bottom:1px solid var(--line);white-space:nowrap">'+esc(x)+'</th>'}).join('')+'</tr></thead><tbody>'+rows.map(function(r){return '<tr>'+r.map(function(x){return '<td style="padding:10px;border-bottom:1px solid var(--line)">'+esc(x==null?'—':x)+'</td>'}).join('')+'</tr>'}).join('')+'</tbody></table></div>'}
+function panel(title,body){return '<div class="section"><div class="section-head"><h2>'+title+'</h2></div><div class="card">'+body+'</div></div>'}
+function overview(days){return panel('每日行程总览',table(['日期','路线','距离 / 驾驶时间','住宿','住宿海拔'],days.map(function(d){return [d.day+' '+d.date,d.route,d.drivingRaw,d.lodging,d.lodgingAlt?d.lodgingAlt+'m':'—']}))+'<p class="muted small">随行程编辑自动更新；驾驶时间不含游览及接驳。</p>')}
+var priorities=[['S','来古冰川','蓝冰、冰川','重点游览'],['S','然乌湖','湖泊、雪山','重点游览'],['S','南迦巴瓦峰','雪山、日照金山','重点游览'],['S','纳木措','湖泊、雪山','固定保留'],['S','羊卓雍措','高山湖泊','固定保留'],['S','珠峰、加乌拉山口','雪山群','重点游览'],['A','巴松措','森林、湖泊','默认保留'],['A','青海湖','高原湖泊','默认保留'],['A','鲁朗林海','森林、雪山','默认保留'],['A','卡若拉冰川','冰川','顺路游览'],['B','古乡湖、雅尼湿地、佛掌沙丘','河谷、湿地','顺路游览'],['B','卡定沟、满拉水库','峡谷、湖泊','时间允许'],['B','普士拉山口、冰淇淋雪山、十万沙丘','雪山、荒漠','定结可选']];
+function priorityView(){var rows;try{rows=JSON.parse(localStorage.getItem('tibet.priority.v1'))||priorities}catch(e){rows=priorities}return '<section class="view"><h1>景点攻略</h1><p class="muted">S：核心优先；A：默认保留；B：弹性游览。可编辑个人优先级模板，独立于每日行程。</p>'+panel('核心景点优先级', '<div style="overflow:auto"><table style="width:100%"><thead><tr><th>级别</th><th>景点</th><th>景观类型</th><th>游览原则</th></tr></thead><tbody>'+rows.map(function(r,i){return '<tr>'+r.map(function(v,j){return '<td><input aria-label="'+['级别','景点','景观类型','游览原则'][j]+'" data-priority="'+i+','+j+'" value="'+esc(v)+'" style="min-width:'+(j===0?'45':'120')+'px;width:100%"></td>'}).join('')+'</tr>'}).join('')+'</tbody></table></div><div class="row"><button class="btn" data-priority-add>新增景点</button><button class="btn" data-priority-reset>恢复默认模板</button></div>')+'<div class="row"><button class="btn primary" data-nav="gallery">景点参考图库</button><button class="btn" data-nav="train">青藏铁路攻略</button></div></section>'}
+function driveHours(d){var m=String(d.drivingRaw||'').match(/(\d+(?:\.\d+)?)\s*[–—-]\s*(\d+(?:\.\d+)?)\s*h/i)||String(d.drivingRaw||'').match(/(\d+(?:\.\d+)?)\s*h/i);return m?Number(m[2]||m[1]):0}
+function safetyView(days){var risks=[['拉萨—鲁朗','冰雪山口','无法安全抵达时住林芝'],['然乌湖、来古冰川','往返可能超过9小时','启用机动日，不赶夜路'],['索松村','日落前抵达不确定','湿地、大峡谷可顺延'],['纳木措','高海拔、临时闭园','优先顺延；身体不适不前往'],['珠峰','接驳及游览时间不足','次日上午补游，必要时取消定结'],['定结','连续高海拔住宿','身体不适则取消并下撤'],['定结—拉萨','长途驾驶','必要时临时中转']];return altitudeView(days).replace('</section>','')+panel('住宿海拔汇总',table(['日期','住宿','海拔'],days.filter(function(d){return d.lodging&&d.lodging!=='—'}).map(function(d){return [d.day+' '+d.date,d.lodging,d.lodgingAlt?d.lodgingAlt+'m':'动态 / 待确认']})))+panel('每日驾驶强度',days.filter(d=>driveHours(d)>0).map(function(d){var h=driveHours(d);return '<div style="margin:12px 0"><div class="between"><b>'+esc(d.day+' '+d.route)+'</b><span>'+h+'h 上限</span></div><div style="height:8px;background:#e5e7eb;border-radius:8px"><div style="height:8px;border-radius:8px;width:'+Math.min(100,h*10)+'%;background:'+(h>9?'#c65b43':h>5?'#b68b40':'#438c80')+'"></div></div></div>'}).join('')+'<p class="muted small">仅统计可解析的驾驶时长，不含游览；超过9小时优先调整。</p>')+panel('风险及备用方案',table(['路段','主要问题','备用方案'],risks))+'<div class="row"><button class="btn" data-nav="packing">旅行准备清单</button><button class="btn" data-nav="modules">行程模块与机动日</button></div></section>'}
+function priorityRows(){try{return JSON.parse(localStorage.getItem('tibet.priority.v1'))||priorities.map(r=>r.slice())}catch(e){return priorities.map(r=>r.slice())}}
+document.addEventListener('change',function(e){var k=e.target.getAttribute('data-priority');if(k){var a=k.split(','),r=priorityRows();r[a[0]][a[1]]=e.target.value;localStorage.setItem('tibet.priority.v1',JSON.stringify(r))}});
+document.addEventListener('click',function(e){if(e.target.closest('[data-priority-add]')){var r=priorityRows();r.push(['B','','','']);localStorage.setItem('tibet.priority.v1',JSON.stringify(r));document.getElementById('main').innerHTML=priorityView()}if(e.target.closest('[data-priority-reset]')&&confirm('恢复默认优先级模板？')){localStorage.removeItem('tibet.priority.v1');document.getElementById('main').innerHTML=priorityView()}});
 /* ---------- 首页 ---------- */
 function home(days){
   var st=C.getStore(),fs=F.stats(days),budget=P.budget(),actual=L.totals().actual;
@@ -37,9 +48,9 @@ function home(days){
    '<input type="date" id="departureInput" value="'+esc(P.getDeparture())+'" style="width:150px"><button class="btn primary" data-action="save-departure">更新</button></div></div></div>'+
    '<div class="section"><div class="section-head"><h2>行程概览</h2><span class="eyebrow">Overview</span></div>'+
    '<div class="grid stat-grid">'+stats.map(function(s){return '<div class="stat"><div class="label">'+s[0]+'</div><div class="value">'+esc(s[1])+' <small>'+esc(s[2])+'</small></div><div class="hint">'+esc(s[3])+'</div></div>'}).join('')+'</div></div>'+
-   '<div class="section"><div class="section-head"><h2>整体路线地图</h2><button class="btn sm" data-nav="map">打开地图 →</button></div>'+mapSVG(days)+'</div>'+
+   overview(days)+'<div class="section"><div class="section-head"><h2>整体路线地图</h2><button class="btn sm" data-nav="map">打开地图 →</button></div>'+mapSVG(days)+'</div>'+
    '<div class="section"><div class="section-head"><h2>快捷入口</h2></div><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">'+
-   [['itinerary','🗓','每日行程与自由编辑'],['footprint','👣','旅行足迹与已完成景点'],['train','🚄','Z165 青藏铁路观景'],['packing','✅','旅行准备清单'],['budget','¥','预计预算管理'],['ledger','📒','独立旅行账本']]
+   [['itinerary','🗓','每日行程与自由编辑'],['footprint','👣','旅行足迹与已完成景点'],['guide','◇','景点优先级与攻略'],['safety','△','海拔、驾驶与安全'],['train','🚄','Z165 青藏铁路观景'],['packing','✅','旅行准备清单'],['mine','☰','我的设置与数据备份'],['budget','¥','预计预算管理'],['ledger','📒','独立旅行账本']]
    .map(function(x){return '<button class="card" style="text-align:left;cursor:pointer" data-nav="'+x[0]+'"><div style="font-size:24px">'+x[1]+'</div><b>'+x[2]+'</b></button>'}).join('')+'</div></div>'+
    '<div class="section"><div class="section-head"><h2>旅行模块</h2><button class="btn sm" data-nav="modules">查看更多 →</button></div>'+
    '<div class="grid module-grid">'+(window.MODULES||[]).slice(0,4).map(function(m){return moduleCard(m,days)}).join('')+'</div></div>'+
@@ -278,7 +289,7 @@ function mapView(days){var mode=window.App&&App.state.mapMode||'plan';
 function altitudeView(days){
   var marks={'D4':'铁路唐古拉山区域'};
   days.forEach(function(d){var n=d.spots.map(function(s){return s.name}).join('');
-    if(/然乌/.test(n))marks[d.day]='然乌湖住宿';if(/卡若拉/.test(n))marks[d.day]='卡若拉冰川';
+    if(/然乌/.test(n))marks[d.day]='然乌湖游览';if(/卡若拉/.test(n))marks[d.day]='卡若拉冰川';
     if(/加乌拉|珠峰/.test(n))marks[d.day]='加乌拉 / 珠峰';if(/纳木措/.test(n))marks[d.day]='纳木措 4718m';});
   var data=days.map(function(d){return {label:d.day,day:d.day,v1:C.alt(d.lodgingAlt),v2:estimateMaxAlt(d)}});
   return '<section class="view"><div class="section-head"><h2>海拔与安全</h2></div><div class="limit-note"><b>说明：</b>海拔用于观察睡眠海拔趋势，部分为估算，不构成个人安全判断。</div>'+
@@ -354,7 +365,7 @@ function mineView(days){
     '地图为路线示意图；行程强度只表示游览与赶路节奏，不代表健康风险等级。'].map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul></div></div></section>';
 }
 
-var Views={home:home,modules:modulesView,itinerary:itineraryView,footprint:footprintView,train:trainView,gallery:galleryView,
+var Views={guide:priorityView,safety:safetyView,home:home,modules:modulesView,itinerary:itineraryView,footprint:footprintView,train:trainView,gallery:galleryView,
   map:mapView,altitude:altitudeView,budget:budgetView,packing:packingView,mine:mineView,mapSVG:mapSVG,dayCard:dayCard,moduleCard:moduleCard};
 window.Views=Views;
 })();

@@ -1,0 +1,9 @@
+[
+ {"id":"m1","num":"01","name":"西宁及青海湖","imageKey":"qinghai_lake","baseDays":["D1","D2"],"summary":"抵达高原的第一站，从西宁市区到青海湖冬季湖岸，缓慢进入高原状态。","highlights":["藏医药文化博物馆的唐卡长卷","青海湖二郎剑的湖岸雪景与冰水交界","莫家街手抓羊肉与甜醅"],"moduleKey":"xining","color":"#2f7d9e"},
+ {"id":"m2","num":"02","name":"青藏铁路 Z165","imageKey":"railway","baseDays":["D3","D4"],"summary":"夜发西宁，穿越昆仑山、可可西里、唐古拉山与错那湖，次日抵达拉萨。","highlights":["昆仑山与玉珠峰","可可西里与沱沱河","唐古拉山铁路最高点5072米","错那湖湖泊雪山"],"moduleKey":"train","color":"#7b8794"},
+ {"id":"m3","num":"03","name":"拉萨三天休整","imageKey":"potala","baseDays":["D5","D6","D7","D15"],"summary":"不赶路的三天，适应海拔、拍摄布达拉宫经典机位，只看代表性历史建筑。","highlights":["八廓街慢走与甜茶","药王山50元机位","布达拉宫与广场夜景","不安排非必要寺庙"],"moduleKey":"lhasa","color":"#b8794b"},
+ {"id":"m4","num":"04","name":"藏东南：林芝、鲁朗、索松村","imageKey":"namcha","baseDays":["D8","D13","D14"],"summary":"从拉萨沿尼洋河谷东行，在索松村守候南迦巴瓦峰的清晨与日落。","highlights":["色季拉山口远眺雪山","南迦巴瓦峰日照金山","雅鲁藏布大峡谷","索松村景观房"],"moduleKey":"southeast","color":"#3d6b8e"},
+ {"id":"m5","num":"05","name":"可选支线：波密、然乌湖、来古冰川","imageKey":"laigu","baseDays":["D9","D10","D11","D12"],"summary":"雪山、冰川与高原湖泊密度最高的一段，也是睡眠海拔变化最需谨慎的一段。","highlights":["来古冰川冰舌与冰川湖","然乌湖雪山湖面","帕隆藏布河谷","米堆冰川视情况取舍"],"moduleKey":"glacier","color":"#4a8fa3","optional":true,"toggleKey":"glacier"},
+ {"id":"m6","num":"06","name":"藏西南：羊湖、卡若拉冰川、珠峰、定结","imageKey":"everest","baseDays":["D16","D17","D18","D19","D20","D21"],"summary":"一路向喜马拉雅，湖泊、冰川与8000米级雪山群落连续出现。","highlights":["羊卓雍措山口俯瞰","卡若拉冰川冰舌","加乌拉山口多座8000米级雪山","珠峰大本营"],"moduleKey":"southwest","color":"#6d5a86"},
+ {"id":"m7","num":"07","name":"藏北：纳木措","imageKey":"namtso","baseDays":["D22","D23"],"summary":"海拔4718米的高原大湖，以辽阔湖面与雪山冰岸收尾。","highlights":["念青唐古拉山","纳木措扎西半岛","湖面与冰岸","不去圣象天门"],"moduleKey":"namtso","color":"#2b6f92","optional":true,"toggleKey":"namtso"}
+]

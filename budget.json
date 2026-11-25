@@ -1,0 +1,98 @@
+[
+ {
+  "id": "b1",
+  "name": "前往西宁的交通",
+  "unit": "人",
+  "qty": 1,
+  "price": 1200,
+  "shared": false
+ },
+ {
+  "id": "b2",
+  "name": "西宁住宿",
+  "unit": "晚",
+  "qty": 3,
+  "price": 260,
+  "shared": true
+ },
+ {
+  "id": "b3",
+  "name": "青海湖及茶卡交通",
+  "unit": "天",
+  "qty": 2,
+  "price": 700,
+  "shared": true
+ },
+ {
+  "id": "b4",
+  "name": "Z165火车票",
+  "unit": "人",
+  "qty": 1,
+  "price": 800,
+  "shared": false
+ },
+ {
+  "id": "b5",
+  "name": "拉萨住宿",
+  "unit": "晚",
+  "qty": 7,
+  "price": 320,
+  "shared": true
+ },
+ {
+  "id": "b6",
+  "name": "西藏包车或拼车",
+  "unit": "天",
+  "qty": 14,
+  "price": 900,
+  "shared": true
+ },
+ {
+  "id": "b7",
+  "name": "西藏其他住宿",
+  "unit": "晚",
+  "qty": 9,
+  "price": 300,
+  "shared": true
+ },
+ {
+  "id": "b8",
+  "name": "餐饮",
+  "unit": "天",
+  "qty": 20,
+  "price": 150,
+  "shared": true
+ },
+ {
+  "id": "b9",
+  "name": "景区交通",
+  "unit": "项",
+  "qty": 6,
+  "price": 220,
+  "shared": true
+ },
+ {
+  "id": "b10",
+  "name": "藏服写真",
+  "unit": "次",
+  "qty": 1,
+  "price": 500,
+  "shared": false
+ },
+ {
+  "id": "b11",
+  "name": "保险",
+  "unit": "人",
+  "qty": 1,
+  "price": 200,
+  "shared": false
+ },
+ {
+  "id": "b12",
+  "name": "其他费用",
+  "unit": "项",
+  "qty": 1,
+  "price": 1000,
+  "shared": true
+ }
+]

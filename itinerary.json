@@ -1,0 +1,1805 @@
+[
+ {
+  "day": "D1",
+  "index": 1,
+  "rawModule": "主线",
+  "route": "抵达西宁",
+  "scheduleRaw": "上午抵达\n14–17博物馆\n18点美食",
+  "scheduleLines": [
+   "上午抵达",
+   "14–17博物馆",
+   "18点美食"
+  ],
+  "slots": {
+   "morning": [
+    "上午抵达"
+   ],
+   "noon": [
+    "14–17博物馆"
+   ],
+   "afternoon": [
+    "18点美食"
+   ],
+   "evening": []
+  },
+  "spotNamesRaw": "藏医药文化博物馆\n莫家街\n水井巷",
+  "spots": [
+   {
+    "name": "藏医药文化博物馆",
+    "detail": "618米唐卡长卷、藏族服饰",
+    "category": "城市人文",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "xining",
+    "visitTime": "2–3小时",
+    "onRoute": true,
+    "worth": false,
+    "description": "位于西宁，馆内有618米唐卡长卷与藏族服饰陈列，适合作为抵达日的轻量适应活动。",
+    "highlights": [
+     "618米唐卡长卷",
+     "藏族服饰展览",
+     "室内活动，适合抵达日"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "莫家街",
+    "detail": "手抓羊肉、酸奶、甜醅",
+    "category": "城市人文",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "xining",
+    "visitTime": "1–2小时",
+    "onRoute": true,
+    "worth": false,
+    "description": "西宁老牌美食街，可品尝手抓羊肉、酸奶、甜醅等青海特色。",
+    "highlights": [
+     "手抓羊肉",
+     "酸奶",
+     "甜醅"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "水井巷",
+    "detail": "手抓羊肉、酸奶、甜醅",
+    "category": "城市人文",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "xining",
+    "visitTime": "1小时",
+    "onRoute": true,
+    "worth": false,
+    "description": "西宁市区美食小巷，与莫家街相邻，可一并安排。",
+    "highlights": [
+     "本地小吃",
+     "夜间散步"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "618米唐卡长卷、藏族服饰\n手抓羊肉、酸奶、甜醅",
+  "lodging": "西宁",
+  "lodgingAlt": "2260",
+  "drivingRaw": "市区",
+  "imagesRaw": "查看藏医药文化博物馆图片",
+  "notesRaw": "晚到则减少景点",
+  "notes": [
+   "晚到则减少景点"
+  ]
+ },
+ {
+  "day": "D2",
+  "index": 2,
+  "rawModule": "主线",
+  "route": "西宁—青海湖—西宁",
+  "scheduleRaw": "08:30出发\n10点日月山\n13–16湖边\n19点返回",
+  "scheduleLines": [
+   "08:30出发",
+   "10点日月山",
+   "13–16湖边",
+   "19点返回"
+  ],
+  "slots": {
+   "morning": [
+    "08:30出发",
+    "10点日月山"
+   ],
+   "noon": [
+    "13–16湖边"
+   ],
+   "afternoon": [],
+   "evening": [
+    "19点返回"
+   ]
+  },
+  "spotNamesRaw": "日月山\n倒淌河\n青海湖二郎剑",
+  "spots": [
+   {
+    "name": "日月山",
+    "detail": "日月山20–30分钟",
+    "category": "高原峡谷",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "riyue",
+    "visitTime": "20–30分钟",
+    "onRoute": true,
+    "worth": false,
+    "description": "青海湖环线上的山口，冬季可看雪线与远山，停留不宜过久。",
+    "highlights": [
+     "山口雪景",
+     "远山视野"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "倒淌河",
+    "detail": "倒淌河车览",
+    "category": "高山湖泊",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "qinghai_lake",
+    "visitTime": "车览",
+    "onRoute": true,
+    "worth": false,
+    "description": "前往青海湖途中的小河，建议车览不专门停留。",
+    "highlights": [
+     "车览即可"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "青海湖二郎剑",
+    "detail": "青海湖2–3小时，湖岸雪景、远山、冰水交界",
+    "category": "高山湖泊",
+    "tags": [
+     "核心景点",
+     "冬季待确认"
+    ],
+    "imageKey": "qinghai_lake",
+    "visitTime": "2–3小时",
+    "onRoute": true,
+    "worth": true,
+    "description": "中国最大的内陆咸水湖。冬季湖岸结冰，远山与冰水交界极具视觉冲击；务必核实景区冬季开放情况，禁止上冰面。",
+    "highlights": [
+     "湖岸雪景",
+     "远山",
+     "冰水交界",
+     "冬季开放需核实"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "日月山20–30分钟\n倒淌河车览\n青海湖2–3小时，湖岸雪景、远山、冰水交界",
+  "lodging": "西宁",
+  "lodgingAlt": "2260",
+  "drivingRaw": "300–350km / 5–6h",
+  "imagesRaw": "查看日月山图片",
+  "notesRaw": "核实冬季开放\n勿上冰面",
+  "notes": [
+   "核实冬季开放",
+   "勿上冰面"
+  ]
+ },
+ {
+  "day": "D3",
+  "index": 3,
+  "rawModule": "主线",
+  "route": "西宁—Z165",
+  "scheduleRaw": "09:30–12自由活动\n14–16:30休息\n17:30到站\n19:28发车",
+  "scheduleLines": [
+   "09:30–12自由活动",
+   "14–16:30休息",
+   "17:30到站",
+   "19:28发车"
+  ],
+  "slots": {
+   "morning": [
+    "09:30–12自由活动"
+   ],
+   "noon": [
+    "14–16:30休息"
+   ],
+   "afternoon": [
+    "17:30到站"
+   ],
+   "evening": [
+    "19:28发车"
+   ]
+  },
+  "spotNamesRaw": "青海省博物馆（可选）",
+  "spots": [
+   {
+    "name": "青海省博物馆（可选）",
+    "detail": "了解青海历史",
+    "category": "城市人文",
+    "tags": [
+     "可选景点"
+    ],
+    "imageKey": "xining",
+    "visitTime": "1–2小时",
+    "onRoute": true,
+    "worth": false,
+    "description": "了解青海历史与上火车前的轻量安排，时间不足可跳过。",
+    "highlights": [
+     "青海历史",
+     "室内"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "了解青海历史\n购买食品、整理行李\n软卧优先",
+  "lodging": "火车",
+  "lodgingAlt": "",
+  "drivingRaw": "铁路",
+  "imagesRaw": "查看青海省博物馆（可选）图片",
+  "notesRaw": "12306核实车次\n茶卡模块见附表",
+  "notes": [
+   "12306核实车次",
+   "茶卡模块见附表"
+  ]
+ },
+ {
+  "day": "D4",
+  "index": 4,
+  "rawModule": "主线",
+  "route": "青藏铁路—拉萨",
+  "scheduleRaw": "08:30–15:36重点观景\n15:36预计抵达",
+  "scheduleLines": [
+   "08:30–15:36重点观景",
+   "15:36预计抵达"
+  ],
+  "slots": {
+   "morning": [
+    "08:30–15:36重点观景"
+   ],
+   "noon": [
+    "15:36预计抵达"
+   ],
+   "afternoon": [],
+   "evening": []
+  },
+  "spotNamesRaw": "唐古拉山\n错那湖\n念青唐古拉山",
+  "spots": [
+   {
+    "name": "唐古拉山",
+    "detail": "详细时间见铁路观景表",
+    "category": "雪山",
+    "tags": [
+     "核心景点"
+    ],
+    "imageKey": "tanggula",
+    "visitTime": "车览/窗口观景",
+    "onRoute": true,
+    "worth": true,
+    "description": "青藏铁路全线最高点附近（铁路最高点5072米），雪山与荒原交织，是Z165观景的重头戏。",
+    "highlights": [
+     "铁路最高点5072米",
+     "雪山",
+     "荒原",
+     "大概率白天经过"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "错那湖",
+    "detail": "到站后入住、吃饭、休息",
+    "category": "高山湖泊",
+    "tags": [
+     "核心景点"
+    ],
+    "imageKey": "cuona_lake",
+    "visitTime": "车览/窗口观景",
+    "onRoute": true,
+    "worth": true,
+    "description": "青藏铁路沿线高原湖泊，湖面开阔，南下方向通常位于列车右侧，湖泊与雪山同框。",
+    "highlights": [
+     "湖泊雪山",
+     "南下通常右侧",
+     "观景窗口约1小时"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "念青唐古拉山",
+    "detail": "到站后入住、吃饭、休息",
+    "category": "雪山",
+    "tags": [
+     "核心景点"
+    ],
+    "imageKey": "nyainqentanglha",
+    "visitTime": "车览/观景",
+    "onRoute": true,
+    "worth": true,
+    "description": "藏北至纳木措途中的雪山山脉，与纳木措湖面构成经典雪山湖泊画面。",
+    "highlights": [
+     "雪山山脉",
+     "纳木措沿途"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "详细时间见铁路观景表\n到站后入住、吃饭、休息",
+  "lodging": "拉萨",
+  "lodgingAlt": "3650",
+  "drivingRaw": "约20h08m",
+  "imagesRaw": "查看唐古拉山图片",
+  "notesRaw": "供氧不等于无高反",
+  "notes": [
+   "供氧不等于无高反"
+  ]
+ },
+ {
+  "day": "D5",
+  "index": 5,
+  "rawModule": "主线",
+  "route": "拉萨休整①",
+  "scheduleRaw": "自然醒\n11–13八廓街\n下午休息\n傍晚可看夜景",
+  "scheduleLines": [
+   "自然醒",
+   "11–13八廓街",
+   "下午休息",
+   "傍晚可看夜景"
+  ],
+  "slots": {
+   "morning": [
+    "自然醒",
+    "11–13八廓街"
+   ],
+   "noon": [],
+   "afternoon": [
+    "下午休息"
+   ],
+   "evening": [
+    "傍晚可看夜景"
+   ]
+  },
+  "spotNamesRaw": "八廓街\n大昭寺外观\n布达拉宫广场",
+  "spots": [
+   {
+    "name": "八廓街",
+    "detail": "慢走古城、喝甜茶",
+    "category": "城市人文",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "barkhor",
+    "visitTime": "2小时",
+    "onRoute": true,
+    "worth": false,
+    "description": "拉萨古城转经道，适合慢走、喝甜茶，感受老城节奏；本行程只看街景不安排参拜。",
+    "highlights": [
+     "慢走古城",
+     "甜茶",
+     "街景"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "大昭寺外观",
+    "detail": "只看寺庙外观，不安排参拜",
+    "category": "城市人文",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "jokhang",
+    "visitTime": "20–30分钟",
+    "onRoute": true,
+    "worth": false,
+    "description": "只安排外观看一眼，不进入参拜，避免过度人文打卡。",
+    "highlights": [
+     "外观",
+     "不安排参拜"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "布达拉宫广场",
+    "detail": "只看寺庙外观，不安排参拜",
+    "category": "城市人文",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "potala",
+    "visitTime": "30–60分钟",
+    "onRoute": true,
+    "worth": true,
+    "description": "傍晚可看布宫夜景，是拉萨最具代表性的历史建筑视角。",
+    "highlights": [
+     "布宫夜景",
+     "广场视角"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "慢走古城、喝甜茶\n只看寺庙外观，不安排参拜",
+  "lodging": "拉萨",
+  "lodgingAlt": "3650",
+  "drivingRaw": "市区",
+  "imagesRaw": "查看八廓街图片",
+  "notesRaw": "不适则取消全部活动",
+  "notes": [
+   "不适则取消全部活动"
+  ]
+ },
+ {
+  "day": "D6",
+  "index": 6,
+  "rawModule": "主线",
+  "route": "拉萨休整②",
+  "scheduleRaw": "10–12:30写真\n12:30–15休息\n15–17摄影",
+  "scheduleLines": [
+   "10–12:30写真",
+   "12:30–15休息",
+   "15–17摄影"
+  ],
+  "slots": {
+   "morning": [
+    "10–12:30写真"
+   ],
+   "noon": [
+    "12:30–15休息",
+    "15–17摄影"
+   ],
+   "afternoon": [],
+   "evening": []
+  },
+  "spotNamesRaw": "药王山\n宗角禄康公园\n八廓街",
+  "spots": [
+   {
+    "name": "药王山",
+    "detail": "藏服写真可选",
+    "category": "城市人文",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "potala",
+    "visitTime": "1–2小时",
+    "onRoute": true,
+    "worth": true,
+    "description": "50元人民币背面机位所在地，可拍摄布达拉宫经典角度。",
+    "highlights": [
+     "50元机位",
+     "布宫拍摄"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "宗角禄康公园",
+    "detail": "50元人民币机位、布宫倒影",
+    "category": "城市人文",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "potala",
+    "visitTime": "1小时",
+    "onRoute": true,
+    "worth": false,
+    "description": "位于布达拉宫北侧，可拍摄布宫倒影，冬季注意保暖。",
+    "highlights": [
+     "布宫倒影",
+     "公园散步"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "八廓街",
+    "detail": "不爬南山",
+    "category": "城市人文",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "barkhor",
+    "visitTime": "2小时",
+    "onRoute": true,
+    "worth": false,
+    "description": "拉萨古城转经道，适合慢走、喝甜茶，感受老城节奏；本行程只看街景不安排参拜。",
+    "highlights": [
+     "慢走古城",
+     "甜茶",
+     "街景"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "藏服写真可选\n50元人民币机位、布宫倒影\n不爬南山",
+  "lodging": "拉萨",
+  "lodgingAlt": "3650",
+  "drivingRaw": "市区",
+  "imagesRaw": "查看药王山图片",
+  "notesRaw": "注意保暖，减少户外换装",
+  "notes": [
+   "注意保暖，减少户外换装"
+  ]
+ },
+ {
+  "day": "D7",
+  "index": 7,
+  "rawModule": "主线",
+  "route": "拉萨休整③",
+  "scheduleRaw": "09:30–12布宫\n下午博物馆可选",
+  "scheduleLines": [
+   "09:30–12布宫",
+   "下午博物馆可选"
+  ],
+  "slots": {
+   "morning": [
+    "09:30–12布宫"
+   ],
+   "noon": [],
+   "afternoon": [
+    "下午博物馆可选"
+   ],
+   "evening": []
+  },
+  "spotNamesRaw": "布达拉宫\n西藏博物馆",
+  "spots": [
+   {
+    "name": "布达拉宫",
+    "detail": "经典历史建筑，可只看外观",
+    "category": "城市人文",
+    "tags": [
+     "核心景点"
+    ],
+    "imageKey": "potala",
+    "visitTime": "2–3小时",
+    "onRoute": true,
+    "worth": true,
+    "description": "西藏最具代表性的历史建筑。台阶多，务必核实冬季预约与闭馆日；亦可只看外观。",
+    "highlights": [
+     "经典历史建筑",
+     "台阶多",
+     "核实预约",
+     "可只看外观"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "西藏博物馆",
+    "detail": "博物馆了解历史文化",
+    "category": "城市人文",
+    "tags": [
+     "可选景点"
+    ],
+    "imageKey": "lhasa",
+    "visitTime": "1–2小时",
+    "onRoute": true,
+    "worth": false,
+    "description": "了解西藏历史文化，作为拉萨休整的室内备选。",
+    "highlights": [
+     "室内",
+     "历史文化"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "经典历史建筑，可只看外观\n博物馆了解历史文化",
+  "lodging": "拉萨",
+  "lodgingAlt": "3650",
+  "drivingRaw": "市区",
+  "imagesRaw": "查看布达拉宫图片",
+  "notesRaw": "布宫台阶多\n核实预约和闭馆日",
+  "notes": [
+   "布宫台阶多",
+   "核实预约和闭馆日"
+  ]
+ },
+ {
+  "day": "D8",
+  "index": 8,
+  "rawModule": "主线",
+  "route": "拉萨—林芝",
+  "scheduleRaw": "08:30出发\n下午沿途观景",
+  "scheduleLines": [
+   "08:30出发",
+   "下午沿途观景"
+  ],
+  "slots": {
+   "morning": [
+    "08:30出发"
+   ],
+   "noon": [],
+   "afternoon": [
+    "下午沿途观景"
+   ],
+   "evening": []
+  },
+  "spotNamesRaw": "尼洋河谷\n卡定沟（可选）",
+  "spots": [
+   {
+    "name": "尼洋河谷",
+    "detail": "河谷车览",
+    "category": "高原峡谷",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "niyang",
+    "visitTime": "车览",
+    "onRoute": true,
+    "worth": false,
+    "description": "拉萨至林芝沿线的河谷风光，沿途车览即可。",
+    "highlights": [
+     "河谷车览",
+     "沿途风光"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "卡定沟（可选）",
+    "detail": "卡定沟峡谷瀑布约1小时，冬季水量小可删",
+    "category": "高原峡谷",
+    "tags": [
+     "可选景点",
+     "冬季待确认"
+    ],
+    "imageKey": "kading",
+    "visitTime": "约1小时",
+    "onRoute": false,
+    "worth": false,
+    "description": "峡谷瀑布景观，需离开高速绕行，冬季水量小且道路可能结冰，可删除。",
+    "highlights": [
+     "峡谷瀑布",
+     "冬季水量小",
+     "结冰则取消"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "河谷车览\n卡定沟峡谷瀑布约1小时，冬季水量小可删",
+  "lodging": "林芝",
+  "lodgingAlt": "3000",
+  "drivingRaw": "约400km / 5–6h",
+  "imagesRaw": "查看尼洋河谷图片",
+  "notesRaw": "卡定沟需离开高速，结冰则取消",
+  "notes": [
+   "卡定沟需离开高速，结冰则取消"
+  ]
+ },
+ {
+  "day": "D9",
+  "index": 9,
+  "rawModule": "冰川模块入口",
+  "route": "林芝—鲁朗—波密",
+  "scheduleRaw": "上午山口\n中午鲁朗\n下午波密",
+  "scheduleLines": [
+   "上午山口",
+   "中午鲁朗",
+   "下午波密"
+  ],
+  "slots": {
+   "morning": [
+    "上午山口"
+   ],
+   "noon": [
+    "中午鲁朗"
+   ],
+   "afternoon": [
+    "下午波密"
+   ],
+   "evening": []
+  },
+  "spotNamesRaw": "色季拉山口\n鲁朗林海\n鲁朗小镇\n古乡湖",
+  "spots": [
+   {
+    "name": "色季拉山口",
+    "detail": "山口10–15分钟",
+    "category": "雪山",
+    "tags": [
+     "核心景点"
+    ],
+    "imageKey": "sejila",
+    "visitTime": "10–15分钟",
+    "onRoute": true,
+    "worth": true,
+    "description": "林芝至鲁朗之间的高山山口，天气好时可远眺南迦巴瓦峰。",
+    "highlights": [
+     "远眺南迦巴瓦",
+     "山口雪景"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "鲁朗林海",
+    "detail": "林海20–30分钟",
+    "category": "高原峡谷",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "lurang",
+    "visitTime": "20–30分钟",
+    "onRoute": true,
+    "worth": false,
+    "description": "鲁朗一带山谷与林海景观，本行程只作短暂停留，不安排深度森林徒步。",
+    "highlights": [
+     "山谷视野",
+     "短暂停留"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "鲁朗小镇",
+    "detail": "石锅鸡",
+    "category": "城市人文",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "lurang",
+    "visitTime": "1小时",
+    "onRoute": true,
+    "worth": false,
+    "description": "可品尝石锅鸡，作为林芝至波密途中的中午休息点。",
+    "highlights": [
+     "石锅鸡",
+     "中途休息"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "古乡湖",
+    "detail": "古乡湖30分钟",
+    "category": "高山湖泊",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "guxiang",
+    "visitTime": "30分钟",
+    "onRoute": true,
+    "worth": false,
+    "description": "波密境内的高原湖泊，沿途停留30分钟即可，不专门绕行。",
+    "highlights": [
+     "湖面",
+     "沿途停留"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "山口10–15分钟\n林海20–30分钟\n石锅鸡\n古乡湖30分钟\n扎西岗村有余时才去",
+  "lodging": "波密",
+  "lodgingAlt": "2700",
+  "drivingRaw": "约230km / 5–7h",
+  "imagesRaw": "查看色季拉山口图片",
+  "notesRaw": "不去冰川则住鲁朗，次日直接索松村",
+  "notes": [
+   "不去冰川则住鲁朗，次日直接索松村"
+  ]
+ },
+ {
+  "day": "D10",
+  "index": 10,
+  "rawModule": "冰川可选",
+  "route": "波密—然乌",
+  "scheduleRaw": "上午出发\n下午湖岸",
+  "scheduleLines": [
+   "上午出发",
+   "下午湖岸"
+  ],
+  "slots": {
+   "morning": [
+    "上午出发"
+   ],
+   "noon": [],
+   "afternoon": [
+    "下午湖岸"
+   ],
+   "evening": []
+  },
+  "spotNamesRaw": "米堆冰川（可选）\n然乌湖",
+  "spots": [
+   {
+    "name": "米堆冰川（可选）",
+    "detail": "米堆需摆渡和步行，优先来古",
+    "category": "冰川",
+    "tags": [
+     "可选景点",
+     "冬季待确认"
+    ],
+    "imageKey": "midui",
+    "visitTime": "2–3小时",
+    "onRoute": false,
+    "worth": false,
+    "description": "需要摆渡与步行，时间成本高；本行程优先安排来古冰川，米堆仅在天气体力充裕时考虑。",
+    "highlights": [
+     "需摆渡步行",
+     "优先来古",
+     "视天气决定"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "然乌湖",
+    "detail": "上然乌、中然乌看雪山湖面",
+    "category": "高山湖泊",
+    "tags": [
+     "核心景点",
+     "冬季待确认"
+    ],
+    "imageKey": "ranwu",
+    "visitTime": "1–2小时",
+    "onRoute": true,
+    "worth": true,
+    "description": "雪山脚下的高原湖泊，上然乌、中然乌视野最佳；住宿海拔3850米，睡眠海拔升幅大，不适者不要住然乌。",
+    "highlights": [
+     "雪山湖面",
+     "上然乌",
+     "中然乌",
+     "睡眠海拔3850m"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "米堆需摆渡和步行，优先来古\n上然乌、中然乌看雪山湖面",
+  "lodging": "然乌（有条件）",
+  "lodgingAlt": "3850",
+  "drivingRaw": "约130km / 3–4h，不含米堆",
+  "imagesRaw": "查看米堆冰川（可选）图片",
+  "notesRaw": "睡眠海拔升幅大\n不适不住然乌",
+  "notes": [
+   "睡眠海拔升幅大",
+   "不适不住然乌"
+  ]
+ },
+ {
+  "day": "D11",
+  "index": 11,
+  "rawModule": "冰川可选",
+  "route": "然乌—来古—波密",
+  "scheduleRaw": "08:30出发\n10–13冰川\n尽早返程",
+  "scheduleLines": [
+   "08:30出发",
+   "10–13冰川",
+   "尽早返程"
+  ],
+  "slots": {
+   "morning": [
+    "08:30出发",
+    "10–13冰川",
+    "尽早返程"
+   ],
+   "noon": [],
+   "afternoon": [],
+   "evening": []
+  },
+  "spotNamesRaw": "来古冰川\n然乌湖",
+  "spots": [
+   {
+    "name": "来古冰川",
+    "detail": "冰舌、冰川湖、蓝冰（不保证）",
+    "category": "冰川",
+    "tags": [
+     "核心景点",
+     "冬季待确认"
+    ],
+    "imageKey": "laigu",
+    "visitTime": "预留3小时",
+    "onRoute": true,
+    "worth": true,
+    "description": "帕隆藏布源头的冰川群，可看冰舌、冰川湖与蓝冰（不保证）。禁止擅入冰洞冰面，按景区开放范围游览。",
+    "highlights": [
+     "冰舌",
+     "冰川湖",
+     "蓝冰不保证",
+     "禁止入冰洞"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "然乌湖",
+    "detail": "预留3小时，按开放范围游览",
+    "category": "高山湖泊",
+    "tags": [
+     "核心景点",
+     "冬季待确认"
+    ],
+    "imageKey": "ranwu",
+    "visitTime": "1–2小时",
+    "onRoute": true,
+    "worth": true,
+    "description": "雪山脚下的高原湖泊，上然乌、中然乌视野最佳；住宿海拔3850米，睡眠海拔升幅大，不适者不要住然乌。",
+    "highlights": [
+     "雪山湖面",
+     "上然乌",
+     "中然乌",
+     "睡眠海拔3850m"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "冰舌、冰川湖、蓝冰（不保证）\n预留3小时，按开放范围游览",
+  "lodging": "波密",
+  "lodgingAlt": "2700",
+  "drivingRaw": "约190km / 4–6h估算",
+  "imagesRaw": "查看来古冰川图片",
+  "notesRaw": "避免夜间赶路\n禁止擅入冰洞冰面",
+  "notes": [
+   "避免夜间赶路",
+   "禁止擅入冰洞冰面"
+  ]
+ },
+ {
+  "day": "D12",
+  "index": 12,
+  "rawModule": "冰川可选",
+  "route": "波密—林芝",
+  "scheduleRaw": "上午出发\n下午休息",
+  "scheduleLines": [
+   "上午出发",
+   "下午休息"
+  ],
+  "slots": {
+   "morning": [
+    "上午出发"
+   ],
+   "noon": [],
+   "afternoon": [
+    "下午休息"
+   ],
+   "evening": []
+  },
+  "spotNamesRaw": "通麦\n帕隆藏布河谷\n鲁朗",
+  "spots": [
+   {
+    "name": "通麦",
+    "detail": "返程补看雪山，不重复景区",
+    "category": "高原峡谷",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "yarlung",
+    "visitTime": "车览",
+    "onRoute": true,
+    "worth": false,
+    "description": "川藏线著名隘口，如今路况改善，作为返程沿途观景点。",
+    "highlights": [
+     "沿途观景"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "帕隆藏布河谷",
+    "detail": "返程补看雪山，不重复景区",
+    "category": "高原峡谷",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "yarlung",
+    "visitTime": "车览",
+    "onRoute": true,
+    "worth": false,
+    "description": "波密至林芝返程的河谷风光，补看雪山，不重复进入已游览景区。",
+    "highlights": [
+     "河谷",
+     "雪山",
+     "返程补看"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "鲁朗",
+    "detail": "返程补看雪山，不重复景区",
+    "category": "城市人文",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "lurang",
+    "visitTime": "30分钟",
+    "onRoute": true,
+    "worth": false,
+    "description": "返程中途休息点，不重复安排林海景区。",
+    "highlights": [
+     "中途休息"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "返程补看雪山，不重复景区",
+  "lodging": "林芝",
+  "lodgingAlt": "3000",
+  "drivingRaw": "约230km / 5–7h",
+  "imagesRaw": "查看通麦图片",
+  "notesRaw": "取消冰川时跳过本日",
+  "notes": [
+   "取消冰川时跳过本日"
+  ]
+ },
+ {
+  "day": "D13",
+  "index": 13,
+  "rawModule": "主线",
+  "route": "林芝（或鲁朗）—索松村",
+  "scheduleRaw": "上午出发\n下午峡谷\n傍晚雪山",
+  "scheduleLines": [
+   "上午出发",
+   "下午峡谷",
+   "傍晚雪山"
+  ],
+  "slots": {
+   "morning": [
+    "上午出发"
+   ],
+   "noon": [],
+   "afternoon": [
+    "下午峡谷"
+   ],
+   "evening": [
+    "傍晚雪山"
+   ]
+  },
+  "spotNamesRaw": "雅尼湿地\n佛掌沙丘\n雅鲁藏布大峡谷\n南迦巴瓦峰",
+  "spots": [
+   {
+    "name": "雅尼湿地",
+    "detail": "湿地、沙丘各20–30分钟，视江岸路线",
+    "category": "高原峡谷",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "yarlung",
+    "visitTime": "20–30分钟",
+    "onRoute": true,
+    "worth": false,
+    "description": "雅鲁藏布江沿岸湿地，视江岸路线顺路停留。",
+    "highlights": [
+     "湿地",
+     "江岸路线"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "佛掌沙丘",
+    "detail": "峡谷1–2小时",
+    "category": "高原峡谷",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "sanddune",
+    "visitTime": "20–30分钟",
+    "onRoute": true,
+    "worth": false,
+    "description": "江边沙丘与雪山同框的小众点位，顺路可看，不必专程。",
+    "highlights": [
+     "沙丘雪山",
+     "顺路可看"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "雅鲁藏布大峡谷",
+    "detail": "索松村日落重点",
+    "category": "高原峡谷",
+    "tags": [
+     "核心景点"
+    ],
+    "imageKey": "yarlung",
+    "visitTime": "1–2小时",
+    "onRoute": true,
+    "worth": true,
+    "description": "世界最深峡谷之一，冬季江面开阔、雪山层次分明；本行程只走索松村一侧，不安排巴松措。",
+    "highlights": [
+     "峡谷视野",
+     "雪山层次",
+     "不去巴松措"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "南迦巴瓦峰",
+    "detail": "索松村日落重点",
+    "category": "雪山",
+    "tags": [
+     "核心景点"
+    ],
+    "imageKey": "namcha",
+    "visitTime": "清晨/傍晚重点",
+    "onRoute": true,
+    "worth": true,
+    "description": "中国最美雪山之一，索松村是拍摄其日照金山的核心机位。清晨与傍晚为重点观景时段，能否见山取决于天气。",
+    "highlights": [
+     "日照金山",
+     "索松村机位",
+     "清晨傍晚",
+     "看天气"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "湿地、沙丘各20–30分钟，视江岸路线\n峡谷1–2小时\n索松村日落重点",
+  "lodging": "索松村",
+  "lodgingAlt": "2900",
+  "drivingRaw": "约3–4h（林芝起）",
+  "imagesRaw": "查看雅尼湿地图片",
+  "notesRaw": "鲁朗起点需额外车程\n景观房优先",
+  "notes": [
+   "鲁朗起点需额外车程",
+   "景观房优先"
+  ]
+ },
+ {
+  "day": "D14",
+  "index": 14,
+  "rawModule": "主线",
+  "route": "索松村—拉萨",
+  "scheduleRaw": "清晨观山\n上午尽早返程",
+  "scheduleLines": [
+   "清晨观山",
+   "上午尽早返程"
+  ],
+  "slots": {
+   "morning": [
+    "清晨观山",
+    "上午尽早返程"
+   ],
+   "noon": [],
+   "afternoon": [],
+   "evening": []
+  },
+  "spotNamesRaw": "南迦巴瓦峰\n尼洋河谷",
+  "spots": [
+   {
+    "name": "南迦巴瓦峰",
+    "detail": "晨景、雪山全貌",
+    "category": "雪山",
+    "tags": [
+     "核心景点"
+    ],
+    "imageKey": "namcha",
+    "visitTime": "清晨/傍晚重点",
+    "onRoute": true,
+    "worth": true,
+    "description": "中国最美雪山之一，索松村是拍摄其日照金山的核心机位。清晨与傍晚为重点观景时段，能否见山取决于天气。",
+    "highlights": [
+     "日照金山",
+     "索松村机位",
+     "清晨傍晚",
+     "看天气"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "尼洋河谷",
+    "detail": "不去巴松措",
+    "category": "高原峡谷",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "niyang",
+    "visitTime": "车览",
+    "onRoute": true,
+    "worth": false,
+    "description": "拉萨至林芝沿线的河谷风光，沿途车览即可。",
+    "highlights": [
+     "河谷车览",
+     "沿途风光"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "晨景、雪山全貌\n不去巴松措",
+  "lodging": "拉萨",
+  "lodgingAlt": "3650",
+  "drivingRaw": "约7–9h",
+  "imagesRaw": "查看南迦巴瓦峰图片",
+  "notesRaw": "天气不好可多住一晚或中途住宿",
+  "notes": [
+   "天气不好可多住一晚或中途住宿"
+  ]
+ },
+ {
+  "day": "D15",
+  "index": 15,
+  "rawModule": "主线",
+  "route": "拉萨休整",
+  "scheduleRaw": "全天自由",
+  "scheduleLines": [
+   "全天自由"
+  ],
+  "slots": {
+   "morning": [
+    "全天自由"
+   ],
+   "noon": [],
+   "afternoon": [],
+   "evening": []
+  },
+  "spotNamesRaw": "休整",
+  "spots": [
+   {
+    "name": "休整",
+    "detail": "洗衣、补充物资、观察身体状态",
+    "category": "城市人文",
+    "tags": [
+     "可选景点"
+    ],
+    "imageKey": "lhasa",
+    "visitTime": "全天",
+    "onRoute": true,
+    "worth": false,
+    "description": "洗衣、补充物资、观察身体状态，不增加高海拔活动。",
+    "highlights": [
+     "洗衣",
+     "补给",
+     "观察身体"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "洗衣、补充物资、观察身体状态",
+  "lodging": "拉萨",
+  "lodgingAlt": "3650",
+  "drivingRaw": "无",
+  "imagesRaw": "查看休整图片",
+  "notesRaw": "不增加高海拔活动",
+  "notes": [
+   "不增加高海拔活动"
+  ]
+ },
+ {
+  "day": "D16",
+  "index": 16,
+  "rawModule": "主线",
+  "route": "拉萨—羊湖—日喀则",
+  "scheduleRaw": "早出发\n上午羊湖\n下午冰川和水库",
+  "scheduleLines": [
+   "早出发",
+   "上午羊湖",
+   "下午冰川和水库"
+  ],
+  "slots": {
+   "morning": [
+    "早出发",
+    "上午羊湖"
+   ],
+   "noon": [],
+   "afternoon": [
+    "下午冰川和水库"
+   ],
+   "evening": []
+  },
+  "spotNamesRaw": "羊卓雍措\n卡若拉冰川\n满拉水库\n江孜宗山古堡",
+  "spots": [
+   {
+    "name": "羊卓雍措",
+    "detail": "羊湖山口30–45分钟、湖岸40–60分钟",
+    "category": "高山湖泊",
+    "tags": [
+     "核心景点"
+    ],
+    "imageKey": "yamdrok",
+    "visitTime": "山口30–45分钟 + 湖岸40–60分钟",
+    "onRoute": true,
+    "worth": true,
+    "description": "西藏三大圣湖之一，山口俯瞰湖泊曲线极具视觉冲击；湖岸停留不必过长。",
+    "highlights": [
+     "山口俯瞰",
+     "湖泊曲线",
+     "高山湖泊"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "卡若拉冰川",
+    "detail": "冰川20–40分钟",
+    "category": "冰川",
+    "tags": [
+     "核心景点",
+     "冬季待确认"
+    ],
+    "imageKey": "karola",
+    "visitTime": "20–40分钟",
+    "onRoute": true,
+    "worth": true,
+    "description": "靠近公路的冰川，可近距离观看冰舌；海拔高，不徒步靠近冰川。",
+    "highlights": [
+     "冰舌",
+     "近公路",
+     "不徒步靠近"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "满拉水库",
+    "detail": "水库15–20分钟",
+    "category": "高山湖泊",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "manla",
+    "visitTime": "15–20分钟",
+    "onRoute": true,
+    "worth": false,
+    "description": "前往江孜途中的水库，顺路短暂停留即可。",
+    "highlights": [
+     "水库",
+     "顺路短停"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "江孜宗山古堡",
+    "detail": "古堡远观",
+    "category": "城市人文",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "gyantse",
+    "visitTime": "远观",
+    "onRoute": true,
+    "worth": false,
+    "description": "只作远观，不安排登山与深度参观。",
+    "highlights": [
+     "远观"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "羊湖山口30–45分钟、湖岸40–60分钟\n冰川20–40分钟\n水库15–20分钟\n古堡远观",
+  "lodging": "日喀则",
+  "lodgingAlt": "3840",
+  "drivingRaw": "约350km / 6–8h",
+  "imagesRaw": "查看羊卓雍措图片",
+  "notesRaw": "高海拔不徒步靠近冰川",
+  "notes": [
+   "高海拔不徒步靠近冰川"
+  ]
+ },
+ {
+  "day": "D17",
+  "index": 17,
+  "rawModule": "主线",
+  "route": "日喀则—定日",
+  "scheduleRaw": "上午出发\n下午休息",
+  "scheduleLines": [
+   "上午出发",
+   "下午休息"
+  ],
+  "slots": {
+   "morning": [
+    "上午出发"
+   ],
+   "noon": [],
+   "afternoon": [
+    "下午休息"
+   ],
+   "evening": []
+  },
+  "spotNamesRaw": "沿途高原雪山",
+  "spots": [
+   {
+    "name": "沿途高原雪山",
+    "detail": "不安排寺庙，重点适应海拔",
+    "category": "雪山",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "tingri",
+    "visitTime": "车览",
+    "onRoute": true,
+    "worth": false,
+    "description": "日喀则至定日沿途连续的高原雪山景观，不安排寺庙，重点适应海拔。",
+    "highlights": [
+     "沿途雪山",
+     "适应海拔"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "不安排寺庙，重点适应海拔",
+  "lodging": "定日",
+  "lodgingAlt": "4300",
+  "drivingRaw": "约240km / 4–5h",
+  "imagesRaw": "查看沿途高原雪山图片",
+  "notesRaw": "有高反不继续上升",
+  "notes": [
+   "有高反不继续上升"
+  ]
+ },
+ {
+  "day": "D18",
+  "index": 18,
+  "rawModule": "主线",
+  "route": "定日—珠峰—定日",
+  "scheduleRaw": "早出发\n白天观景\n安全返程",
+  "scheduleLines": [
+   "早出发",
+   "白天观景",
+   "安全返程"
+  ],
+  "slots": {
+   "morning": [
+    "早出发",
+    "白天观景",
+    "安全返程"
+   ],
+   "noon": [],
+   "afternoon": [],
+   "evening": []
+  },
+  "spotNamesRaw": "加乌拉山口\n珠峰大本营\n8848.86标识",
+  "spots": [
+   {
+    "name": "加乌拉山口",
+    "detail": "多座8000米级雪山、珠峰山体与旗云",
+    "category": "雪山",
+    "tags": [
+     "核心景点"
+    ],
+    "imageKey": "gawula",
+    "visitTime": "30–45分钟",
+    "onRoute": true,
+    "worth": true,
+    "description": "珠峰观景的经典山口，天气好时可一次看到多座8000米级雪山与珠峰山体。",
+    "highlights": [
+     "多座8000米级雪山",
+     "珠峰山体",
+     "旗云"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "珠峰大本营",
+    "detail": "不强求日落",
+    "category": "雪山",
+    "tags": [
+     "核心景点",
+     "冬季待确认"
+    ],
+    "imageKey": "everest",
+    "visitTime": "1–2小时",
+    "onRoute": true,
+    "worth": true,
+    "description": "海拔5000米以上，世界最高峰大本营。需核实景区观光车与边防证，不强求日落，注意高反与安全返程。",
+    "highlights": [
+     "8848.86标识",
+     "5000米以上",
+     "核实观光车",
+     "边防证"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "8848.86标识",
+    "detail": "不强求日落",
+    "category": "雪山",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "everest",
+    "visitTime": "15分钟",
+    "onRoute": true,
+    "worth": false,
+    "description": "珠峰大本营附近的标志性打卡点，顺路拍摄即可。",
+    "highlights": [
+     "标志点",
+     "顺路拍摄"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "多座8000米级雪山、珠峰山体与旗云\n不强求日落",
+  "lodging": "定日",
+  "lodgingAlt": "4300",
+  "drivingRaw": "车程待领队核实",
+  "imagesRaw": "查看加乌拉山口图片",
+  "notesRaw": "5000米以上\n核实观光车和边防证",
+  "notes": [
+   "5000米以上",
+   "核实观光车和边防证"
+  ]
+ },
+ {
+  "day": "D19",
+  "index": 19,
+  "rawModule": "定结可选",
+  "route": "定日—定结",
+  "scheduleRaw": "白天观景",
+  "scheduleLines": [
+   "白天观景"
+  ],
+  "slots": {
+   "morning": [
+    "白天观景"
+   ],
+   "noon": [],
+   "afternoon": [],
+   "evening": []
+  },
+  "spotNamesRaw": "普士拉山口\n冰淇淋雪山\n十万沙丘",
+  "spots": [
+   {
+    "name": "普士拉山口",
+    "detail": "雪山与沙丘组合",
+    "category": "雪山",
+    "tags": [
+     "可选景点",
+     "冬季待确认"
+    ],
+    "imageKey": "dingjie",
+    "visitTime": "30分钟",
+    "onRoute": false,
+    "worth": false,
+    "description": "定结方向的高山山口，雪山视野好，但属于额外车程支线。",
+    "highlights": [
+     "雪山视野",
+     "额外车程"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "冰淇淋雪山",
+    "detail": "阿玛直米雪山、宗措湖仅在点位和路况确认后考虑",
+    "category": "雪山",
+    "tags": [
+     "可选景点",
+     "冬季待确认"
+    ],
+    "imageKey": "dingjie",
+    "visitTime": "30分钟",
+    "onRoute": false,
+    "worth": false,
+    "description": "定结一带的网红雪山点位，外观是否成立取决于季节与路况，未确认前不作为必去。",
+    "highlights": [
+     "网红点位",
+     "需确认"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "十万沙丘",
+    "detail": "阿玛直米雪山、宗措湖仅在点位和路况确认后考虑",
+    "category": "高原峡谷",
+    "tags": [
+     "可选景点",
+     "冬季待确认"
+    ],
+    "imageKey": "sanddune",
+    "visitTime": "30–45分钟",
+    "onRoute": false,
+    "worth": false,
+    "description": "定结境内的沙丘与雪山组合景观，非最短返程路线，视路况与天气决定。",
+    "highlights": [
+     "沙丘雪山",
+     "非最短返程"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "雪山与沙丘组合\n阿玛直米雪山、宗措湖仅在点位和路况确认后考虑",
+  "lodging": "定结",
+  "lodgingAlt": "4200",
+  "drivingRaw": "待核实",
+  "imagesRaw": "查看普士拉山口图片",
+  "notesRaw": "不是最短返程\n网红点位未确认",
+  "notes": [
+   "不是最短返程",
+   "网红点位未确认"
+  ]
+ },
+ {
+  "day": "D20",
+  "index": 20,
+  "rawModule": "主线",
+  "route": "定结（或定日）—日喀则",
+  "scheduleRaw": "白天返程",
+  "scheduleLines": [
+   "白天返程"
+  ],
+  "slots": {
+   "morning": [
+    "白天返程"
+   ],
+   "noon": [],
+   "afternoon": [],
+   "evening": []
+  },
+  "spotNamesRaw": "沿途高原雪山",
+  "spots": [
+   {
+    "name": "沿途高原雪山",
+    "detail": "不新增景区",
+    "category": "雪山",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "tingri",
+    "visitTime": "车览",
+    "onRoute": true,
+    "worth": false,
+    "description": "日喀则至定日沿途连续的高原雪山景观，不安排寺庙，重点适应海拔。",
+    "highlights": [
+     "沿途雪山",
+     "适应海拔"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "不新增景区\n取消定结则直接从定日返回",
+  "lodging": "日喀则",
+  "lodgingAlt": "3840",
+  "drivingRaw": "待核实",
+  "imagesRaw": "查看沿途高原雪山图片",
+  "notesRaw": "避免夜间行车",
+  "notes": [
+   "避免夜间行车"
+  ]
+ },
+ {
+  "day": "D21",
+  "index": 21,
+  "rawModule": "主线",
+  "route": "日喀则—拉萨",
+  "scheduleRaw": "上午出发\n下午休息",
+  "scheduleLines": [
+   "上午出发",
+   "下午休息"
+  ],
+  "slots": {
+   "morning": [
+    "上午出发"
+   ],
+   "noon": [],
+   "afternoon": [
+    "下午休息"
+   ],
+   "evening": []
+  },
+  "spotNamesRaw": "雅鲁藏布江河谷",
+  "spots": [
+   {
+    "name": "雅鲁藏布江河谷",
+    "detail": "沿途观景，返回酒店",
+    "category": "高原峡谷",
+    "tags": [
+     "顺路景点"
+    ],
+    "imageKey": "yarlung",
+    "visitTime": "车览",
+    "onRoute": true,
+    "worth": false,
+    "description": "日喀则返回拉萨沿途的河谷风光，不安排大型景点。",
+    "highlights": [
+     "河谷车览",
+     "返程"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "沿途观景，返回酒店",
+  "lodging": "拉萨",
+  "lodgingAlt": "3650",
+  "drivingRaw": "约4–5h估算",
+  "imagesRaw": "查看雅鲁藏布江河谷图片",
+  "notesRaw": "不安排大型景点",
+  "notes": [
+   "不安排大型景点"
+  ]
+ },
+ {
+  "day": "D22",
+  "index": 22,
+  "rawModule": "纳木措可选",
+  "route": "拉萨休整",
+  "scheduleRaw": "全天",
+  "scheduleLines": [
+   "全天"
+  ],
+  "slots": {
+   "morning": [
+    "全天"
+   ],
+   "noon": [],
+   "afternoon": [],
+   "evening": []
+  },
+  "spotNamesRaw": "休整",
+  "spots": [
+   {
+    "name": "休整",
+    "detail": "为纳木措准备，观察身体",
+    "category": "城市人文",
+    "tags": [
+     "可选景点"
+    ],
+    "imageKey": "lhasa",
+    "visitTime": "全天",
+    "onRoute": true,
+    "worth": false,
+    "description": "洗衣、补充物资、观察身体状态，不增加高海拔活动。",
+    "highlights": [
+     "洗衣",
+     "补给",
+     "观察身体"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "为纳木措准备，观察身体",
+  "lodging": "拉萨",
+  "lodgingAlt": "3650",
+  "drivingRaw": "无",
+  "imagesRaw": "查看休整图片",
+  "notesRaw": "不去纳木措可结束旅行",
+  "notes": [
+   "不去纳木措可结束旅行"
+  ]
+ },
+ {
+  "day": "D23",
+  "index": 23,
+  "rawModule": "纳木措可选",
+  "route": "拉萨—纳木措—拉萨",
+  "scheduleRaw": "08点左右出发\n中午观湖\n下午返程",
+  "scheduleLines": [
+   "08点左右出发",
+   "中午观湖",
+   "下午返程"
+  ],
+  "slots": {
+   "morning": [
+    "08点左右出发"
+   ],
+   "noon": [
+    "中午观湖"
+   ],
+   "afternoon": [
+    "下午返程"
+   ],
+   "evening": []
+  },
+  "spotNamesRaw": "念青唐古拉山\n纳木措扎西半岛",
+  "spots": [
+   {
+    "name": "念青唐古拉山",
+    "detail": "湖面辽阔、雪山冰岸",
+    "category": "雪山",
+    "tags": [
+     "核心景点"
+    ],
+    "imageKey": "nyainqentanglha",
+    "visitTime": "车览/观景",
+    "onRoute": true,
+    "worth": true,
+    "description": "藏北至纳木措途中的雪山山脉，与纳木措湖面构成经典雪山湖泊画面。",
+    "highlights": [
+     "雪山山脉",
+     "纳木措沿途"
+    ],
+    "imageNote": false
+   },
+   {
+    "name": "纳木措扎西半岛",
+    "detail": "停留1–2小时",
+    "category": "高山湖泊",
+    "tags": [
+     "核心景点",
+     "冬季待确认"
+    ],
+    "imageKey": "namtso",
+    "visitTime": "1–2小时",
+    "onRoute": true,
+    "worth": true,
+    "description": "海拔4718米的高原大湖，湖面辽阔并有雪山冰岸；冬季需核实开放，不去圣象天门。",
+    "highlights": [
+     "湖面辽阔",
+     "雪山冰岸",
+     "海拔4718m",
+     "不去圣象天门"
+    ],
+    "imageNote": false
+   }
+  ],
+  "detailRaw": "湖面辽阔、雪山冰岸\n停留1–2小时\n不去圣象天门",
+  "lodging": "拉萨",
+  "lodgingAlt": "3650",
+  "drivingRaw": "往返7–9h",
+  "imagesRaw": "查看念青唐古拉山图片",
+  "notesRaw": "湖面海拔4718m\n核实雪天开放",
+  "notes": [
+   "湖面海拔4718m",
+   "核实雪天开放"
+  ]
+ }
+]

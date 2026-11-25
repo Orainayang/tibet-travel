@@ -20,20 +20,21 @@ function defaultDays(){
 }
 function toggles(){var t=get('toggles',null);if(!t){t=clone(DEFAULT_TOGGLES);set('toggles',t)}return Object.assign(clone(DEFAULT_TOGGLES),t,{flex:get('flex',0)})}
 function setToggle(key,val){
-  var t=toggles();if(key==='flex')set('flex',Math.max(0,C.num(val)));else t[key]=!!val;
+  var t=toggles();if(key==='flex')set('flex',Math.max(0,C.num(val)));else t[key]=key==='namtso'?true:!!val;
   set('toggles',t);
   var arr=current();arr=applySingle(arr,key,t[key]);set('days',renumber(arr));
   return current();
 }
 function current(){
   var arr=get('days',null);
+  if(get('revision',0)!==20261125){if(Array.isArray(arr))set('backupBeforeFinal20',arr);set('revision',20261125);set('toggles',clone(DEFAULT_TOGGLES));arr=null;}
   if(!Array.isArray(arr)||!arr.length){arr=defaultDays();set('days',arr)}
   return renumber(clone(arr));
 }
 function save(arr){set('days',renumber(clone(arr)));return current()}
 function renumber(arr){
   var dep=get('departure','2026-12-15');
-  arr.forEach(function(d,i){d.index=i+1;d.day='D'+(i+1);d.date=d.date||C.dateAdd(dep,i);
+  arr.forEach(function(d,i){d.index=i+1;d.day='D'+(i+1);d.date=C.dateAdd(dep,i);
     if(!d.slots)d.slots={morning:[],noon:[],afternoon:[],evening:[]};
     d.spots=(d.spots||[]).map(function(s){if(!s.id)s.id=sid(s.name);return s});
     if(!d.notes)d.notes=[];if(!d.alternatives)d.alternatives=[];
@@ -68,10 +69,10 @@ function applySingle(arr,key,on){
     }else if(!arr.some(function(d){return d.moduleKey==='glacier'})){
       var j=findIdx(arr,function(d){return d.moduleKey==='southeast'});
       if(j<0)j=arr.length;
-      [9,10,11,12].forEach(function(n,k){arr.splice(j+k,0,clone(BASE[n-1]))});
+      [9,10].forEach(function(n,k){arr.splice(j+k,0,clone(BASE[n-1]))});
       // 恢复因关闭支线而被改写的索松村日路线
       arr.forEach(function(d){if(d.moduleKey==='southeast'&&/索松村/.test(d.route)){
-        d.route=BASE[12].route;
+        d.route=BASE[10].route;
         d.alternatives=(d.alternatives||[]).filter(function(a){return !/关闭然乌湖与来古冰川支线/.test(a)});
       }});
     }
@@ -104,23 +105,18 @@ function applySingle(arr,key,on){
     }
   }
   if(key==='dingjie'){
-    if(!on){
-      arr=arr.filter(function(d){return d.moduleKey!=='dingjie'});
-      var e=findIdx(arr,function(d){return d.moduleKey==='everest'||d.moduleKey==='everest2'});
-      if(e>=0)arr[e].alternatives=(arr[e].alternatives||[]).concat(['已关闭定结，下一日从珠峰住宿点直接返回日喀则。']);
-      arr.forEach(function(d){if(/定结—日喀则/.test(d.route))d.route='珠峰住宿点—日喀则'});
-    }else if(!arr.some(function(d){return d.moduleKey==='dingjie'})){
-      insertDefault(arr,18,function(d){return /定结—日喀则|珠峰住宿点—日喀则/.test(d.route)});
-    }
+    var i=arr.findIndex(function(d){return d.moduleKey==='dingjie'||d.moduleKey==='dingjieSkip'});
+    if(i>=0){if(on&&arr[i].moduleKey==='dingjieSkip'){arr[i]=clone(BASE[17]);arr[i+1]=clone(BASE[18]);}else if(!on&&arr[i].moduleKey==='dingjie'){arr[i]=Object.assign(clone(BASE[17]),{moduleKey:'dingjieSkip',route:'珠峰小镇—日喀则',lodging:'日喀则',lodgingAlt:'3840',drivingRaw:'约300–350km / 6–8h',spots:[],slots:{morning:['珠峰小镇出发'],noon:['途中休息'],afternoon:['返回日喀则'],evening:['休息']},notes:['取消定结，降低住宿海拔'],alternatives:['必要时补游珠峰']});arr[i+1]=Object.assign(clone(BASE[18]),{route:'日喀则—拉萨',drivingRaw:'270km / 4–5h',notes:['返回拉萨'],alternatives:[],slots:{morning:['日喀则出发'],noon:['途中休息'],afternoon:['抵达拉萨'],evening:['休息']}});}}
   }
   if(key==='namtso'){
+    on=true;
     if(!on)arr=arr.filter(function(d){return d.moduleKey!=='namtso'});
     else if(!arr.some(function(d){return d.moduleKey==='namtso'}))
       insertDefault(arr,15,function(d){return /拉萨—日喀则/.test(d.route)});
   }
   if(key==='songsongExtra'){
     if(on&&!arr.some(function(d){return d.moduleKey==='songsongExtra'})){
-      var s=findIdx(arr,function(d){return d.moduleKey==='southeast'&&/林芝—索松村|雅尼湿地/.test(d.route)});
+      var s=findIdx(arr,function(d){return d.moduleKey==='southeast'&&/索松村/.test(d.route)});
       if(s>=0)arr.splice(s+1,0,{moduleKey:'songsongExtra',route:'索松村（加住一晚）',intensity:'低',
         lodging:'索松村',lodgingAlt:'2900',drivingRaw:'无长途驾驶',
         spots:[{id:sid('南迦巴瓦峰'),name:'南迦巴瓦峰',category:'雪山',tags:['核心景点'],imageKey:'namcha',visitTime:'清晨/傍晚',onRoute:true,worth:true,description:'多留一晚提高见到主峰与日照金山的概率。',highlights:['日照金山','看天气'],detail:'增加一晚观山'}],

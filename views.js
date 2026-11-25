@@ -320,12 +320,12 @@ function packingView(){
 /* ---------- 我的 ---------- */
 function mineView(days){
   var t=P.toggles(),fs=F.stats(days);
-  var opts=[['chaka','茶卡盐湖','+1 天'],['glacier','然乌湖＋来古冰川','关闭 -4 天'],['midui','米堆冰川','仅在冰川支线开启时可选'],
-    ['dingjie','定结雪山＋十万沙丘','关闭 -1 天'],['namtso','纳木措','关闭 -1 天'],['songsongExtra','索松村额外住宿','+1 天'],['everestSafe','珠峰稳妥路线','+1 天']];
+  var opts=[['chaka','茶卡盐湖','+1 天'],['glacier','然乌湖＋来古冰川','关闭 -2 天'],['midui','米堆冰川','仅在冰川支线开启时可选'],
+    ['dingjie','定结雪山＋十万沙丘','关闭后仍为20天'],['namtso','纳木措','固定保留'],['songsongExtra','索松村额外住宿','+1 天'],['everestSafe','珠峰稳妥路线','+1 天']];
   return '<section class="view"><div class="section-head"><h2>我的 · 设置与数据</h2></div>'+
    '<div class="grid stat-grid">'+[['计划天数',days.length+' 天'],['已游玩',fs.visited+' 处'],['预计预算',C.money0(P.budget())],['实际支出',C.money0(L.totals().actual)]].map(function(s){return '<div class="stat"><div class="label">'+s[0]+'</div><div class="value">'+s[1]+'</div></div>'}).join('')+'</div>'+
    '<div class="section"><div class="section-head"><h2>模块开关</h2></div><div class="card">'+opts.map(function(o){
-     var dis=o[0]==='midui'&&!t.glacier;
+     var dis=o[0]==='namtso'||(o[0]==='midui'&&!t.glacier);
      return '<div class="between" style="padding:9px 0;border-bottom:1px solid var(--line)"><div><b>'+esc(o[1])+'</b> <span class="tiny muted">'+esc(o[2])+'</span></div>'+
       '<label class="switch"><input type="checkbox" data-module-toggle="'+o[0]+'" '+(t[o[0]]?'checked':'')+' '+((dis)?'disabled':'')+'><span class="track"></span></label></div>'}).join('')+
      '<div class="between" style="padding-top:12px"><div><b>机动休整日</b><div class="muted small">当前 '+(t.flex||0)+' 天</div></div>'+

@@ -10,12 +10,12 @@ function avatar(m){return '<span class="avatar" style="background:'+esc(m.color|
 function colorFor(i){return ['#2b6f92','#b8794b','#6d5a86','#3d8c72','#c07a5a','#5b7fa6'][i%6]}
 
 function ledgerHome(days){
-  var t=L.totals(),st=t.stats,ms=L.members(),me=ms[0],ps=L.poolStats();
+  var t=L.totals(),st=t.stats,ms=L.members(),me=ms.find(function(m){return m.id===Store.get('ledger.me','')}),ps=L.poolStats();
   var mine=me?st[me.id]:{paid:0,consumed:0,balance:0,personalConsumed:0};
   var cat=L.byCategory(),daily=L.byDay(days);
   var cmp=ms.map(function(m){var s=st[m.id];return {label:m.name,paid:s.paid,consumed:s.consumed}});
-  var stats=[['预计旅行总预算',C.money0(t.budget),''],['当前实际总支出',C.money0(t.actual),''],
-    ['剩余预算',C.money0(t.remaining),''],['我的实际消费',C.money0(mine.consumed),me?me.name:'未设置成员'],
+  var stats=[['当前实际总支出',C.money0(t.actual),''],
+    ['我的实际消费',C.money0(mine.consumed),me?me.name:'未设置成员'],
     ['我的累计付款',C.money0(mine.paid),''],['我的累计垫付',C.money0(Math.max(0,mine.paid-mine.consumed)),''],
     ['我的待收款',C.money0(Math.max(0,mine.balance)),''],['我的待付款',C.money0(Math.max(0,-mine.balance)),'']];
   return '<div class="view" id="view-ledger">'+
@@ -153,11 +153,8 @@ function settlementView(){
 }
 function statsView(days){
   var t=L.totals(),cat=L.byCategory(),ms=L.members(),st=t.stats;
-  return '<div class="view"><div class="section-head"><h2>预算统计</h2><span class="eyebrow">Statistics</span></div>'+
-   '<div class="grid stat-grid">'+[['预计预算',C.money0(t.budget)],['实际支出',C.money0(t.actual)],['剩余',C.money0(t.remaining)],['余额校验',C.money(t.balanceSum),'应为 ¥0.00']].map(function(s){return '<div class="stat"><div class="label">'+s[0]+'</div><div class="value">'+s[1]+' <small>'+(s[2]||'')+'</small></div></div>'}).join('')+'</div>'+
-   '<div class="section"><div class="chart-box"><b class="small">预算与实际支出对比</b>'+Ch.barChart((window.BUDGET||[]).map(function(b){
-     return {label:b.name,value:Math.round(b.qty*b.price*100),color:'#dceaf1'};
-   }),{height:240})+'</div></div>'+
+  return '<div class="view"><div class="section-head"><h2>实际消费统计</h2><span class="eyebrow">Statistics</span></div>'+
+   '<div class="grid stat-grid">'+[['实际支出',C.money0(t.actual)],['余额校验',C.money(t.balanceSum),'应为 ¥0.00']].map(function(s){return '<div class="stat"><div class="label">'+s[0]+'</div><div class="value">'+s[1]+' <small>'+(s[2]||'')+'</small></div></div>'}).join('')+'</div>'+
    '<div class="section"><div class="section-head"><h2>类别占比</h2></div><div class="chart-box">'+Ch.donut(cat.map(function(c){return {label:c.name,value:c.amount}}),{size:250})+'</div></div>'+
    '<div class="section"><div class="section-head"><h2>成员付款 / 消费对比</h2></div><div class="chart-box">'+Ch.groupedBar(ms.map(function(m){var s=st[m.id];return {label:m.name,paid:s.paid,consumed:s.consumed}}))+'</div></div>'+
    '<div class="section"><div class="section-head"><h2>每日消费柱状图</h2></div><div class="chart-box">'+Ch.barChart(L.byDay(days).map(function(d){return {label:d.day,value:d.amount}}))+'</div></div></div>';
@@ -240,7 +237,7 @@ function poolContribList(){
    L.pool().contributions.map(function(c){return '<div class="between small" style="padding:7px 0;border-bottom:1px solid var(--line)"><span>'+esc(c.date||'')+' '+esc((mp[c.memberId]||{}).name||'')+' '+esc(c.note||'')+'</span>'+
     '<span><b class="money">'+C.money(c.amount)+'</b> <button class="btn sm danger" data-action="delete-contribution" data-id="'+esc(c.id)+'">删除</button></span></div>'}).join('')+'</div>';
 }
-window.LedgerViews={ledgerHome:ledgerHome,expensesView:expensesView,membersView:membersView,memberDetail:memberDetail,
+window.LedgerViews={myView:function(){var ms=L.members(),id=Store.get('ledger.me','');return '<div class="card"><label>选择本人</label><select id="ledgerMe"><option value="">请选择本人</option>'+ms.map(function(m){return '<option value="'+esc(m.id)+'" '+(m.id===id?'selected':'')+'>'+esc(m.name)+'</option>'}).join('')+'</select><button class="btn sm" data-ledger-tab="members">管理成员</button></div>'+(id?memberDetail(id):'<div class="card">选择本人后查看个人消费、AA应摊及结算。</div>');},ledgerHome:ledgerHome,expensesView:expensesView,membersView:membersView,memberDetail:memberDetail,
   settlementView:settlementView,statsView:statsView,expenseForm:expenseForm,memberForm:memberForm,
   settlementForm:settlementForm,contributionForm:contributionForm,poolTable:poolTable,poolContribList:poolContribList,
   MODE_NAME:MODE_NAME,STATUS:STATUS,colorFor:colorFor,avatar:avatar};

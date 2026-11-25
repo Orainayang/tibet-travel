@@ -131,14 +131,8 @@ function expenseSheets(){
   var s4={name:'04 AA结算明细',header:['付款人','收款人','金额（元）','状态','已结金额（元）','结算日期','范围','凭证','备注','创建时间'],moneyCols:[2,4],widths:[14,14,14,12,16,14,20,12,26,20],wrapCols:[8],rows:[]};
   sc.forEach(function(s){s4.rows.push([mp[s.from]||s.from,mp[s.to]||s.to,Math.round(s.amount||0),({pending:'待结算',paid:'已结算',partial:'部分结算',cancelled:'已取消'})[s.status]||s.status,Math.round(s.paidAmount||0),s.date||'',s.scopeLabel||'总账结算',s.receipt?'有':'无',s.note||'',new Date(s.createdAt||Date.now()).toLocaleString('zh-CN')])});
 
-  var s5={name:'05 预算与实际支出对比',header:['费用类别','单位','数量','单价（元）','预算小计（元）','实际支出（元）','差额（元）'],moneyCols:[3,4,5,6],widths:[26,10,10,14,16,16,16],wrapCols:[],rows:[]};
-  var actualByCat={};(window.BUDGET||[]).forEach(function(b){actualByCat[b.name]=0});
-  exps.forEach(function(e){actualByCat[e.category]=(actualByCat[e.category]||0)+Math.round(e.amount||0)});
-  (window.BUDGET||[]).forEach(function(b){
-    var budget=Math.round(b.qty)*Math.round(b.price*100),act=actualByCat[b.name]||0;
-    s5.rows.push([b.name,b.unit,Math.round(b.qty),Math.round(b.price*100),budget,act,budget-act]);
-  });
-  s5.rows.push(['预计总预算','','','',C.budgetTotal(),L.totals().actual,C.budgetTotal()-L.totals().actual]);
+  var s5={name:'05 实际支出分类',header:['费用类别','实际支出（元）'],moneyCols:[1],widths:[26,20],rows:L.byCategory().map(function(c){return [c.name,c.amount]})};
+  s5.rows.push(['实际总支出',L.totals().actual]);
 
   var ps=L.poolStats();
   var s6={name:'06 公共资金流水',header:['日期','类型','成员','金额（元）','说明','公众保管人'],moneyCols:[3],widths:[14,14,16,16,36,16],wrapCols:[4],rows:[]};

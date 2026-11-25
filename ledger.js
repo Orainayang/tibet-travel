@@ -23,8 +23,8 @@ function categories(){return load('categories',DEFAULT_CATEGORIES.slice())}
 function setCategories(v){save('categories',v)}
 function pool(){return load('pool',{contributions:[],custodian:''})}
 function setPool(v){save('pool',v)}
-function paidBudget(){return load('paidBudget',0)}
-function setPaidBudget(v){save('paidBudget',v)}
+function paidBudget(){return 0}
+function setPaidBudget(v){save('paidBudget',0)}
 function lastForm(){return load('lastForm',{payer:'',participants:[],category:'餐饮'})}
 function setLastForm(v){save('lastForm',v)}
 function addonFlag(){return load('addonEnabled',false)}

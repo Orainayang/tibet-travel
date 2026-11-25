@@ -29,11 +29,11 @@ function render(){
     case 'packing':html=V.packing();break;
     case 'mine':html=V.mine(DAYS);break;
     case 'ledger':
-      var tabs=[['home','账本首页'],['expenses','消费明细'],['members','成员账单'],['settlement','AA结算'],['stats','消费统计']];
+      var tabs=[['home','账本首页'],['expenses','消费明细'],['my','我的费用'],['members','成员账单'],['settlement','AA结算'],['stats','消费统计']];
       html='<div class="tabs">'+tabs.map(function(t){return '<button class="'+(state.ledgerTab===t[0]?'active':'')+'" data-ledger-tab="'+t[0]+'">'+t[1]+'</button>'}).join('')+'</div>';
       switch(state.ledgerTab){
         case 'home':html+=LV.ledgerHome(DAYS);break;
-        case 'expenses':html+=LV.expensesView(state.filters);break;
+        case 'expenses':html+=LV.expensesView(state.filters);break;case 'my':html+=LV.myView();break;
         case 'members':html+=state.memberDetail?LV.memberDetail(state.memberDetail):LV.membersView();break;
         case 'settlement':html+=LV.settlementView();break;
         case 'stats':html+=LV.statsView(DAYS);break;
@@ -232,6 +232,7 @@ document.addEventListener('click',function(e){
 });
 document.addEventListener('change',function(e){
   var t=e.target;
+  if(t.id==='ledgerMe'){Store.set('ledger.me',t.value);render();return}
   if(t.id==='restoreFile'&&t.files[0]){var r=new FileReader();r.onload=function(){try{var data=JSON.parse(r.result),res=data.version===2?Ex.fullRestore(data):L.restore(data);C.toast(res.ok?'数据已恢复':res.error);render()}catch(err){C.toast('备份文件解析失败')}};r.readAsText(t.files[0]);return}
   if(t.getAttribute&&t.getAttribute('data-module-toggle')){P.setToggle(t.getAttribute('data-module-toggle'),t.checked);C.toast('行程已更新');render();return}
   if(t.getAttribute&&t.getAttribute('data-check')){var st=C.getStore(),pk=st.packing||{};pk[t.getAttribute('data-check')]=t.checked;st.packing=pk;C.saveSettings(st);t.closest('.check-item').classList.toggle('done',t.checked);return}
@@ -284,6 +285,6 @@ function initNav(){
    .map(function(x){return '<button data-nav="'+x[0]+'">'+x[1]+'</button>'}).join('');
 }
 window.App={state:state,days:days,record:record,isOpen:isOpen,go:go,render:render,
-  init:function(){initNav();rebuild();render();if(window.Sync)window.Sync.init()}};
+  init:function(){var st=Store.get('settings',{});delete st.budgetQty;delete st.budgetPrice;Store.set('settings',st);L.setPaidBudget(0);initNav();rebuild();render();if(window.Sync)window.Sync.init()}};
 document.addEventListener('DOMContentLoaded',function(){window.App.init()});
 })();

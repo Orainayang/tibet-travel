@@ -204,11 +204,7 @@ function removeFlex(count){
 
 /* ---------- 派生统计 ---------- */
 function baseBudget(){var b=0;(window.BUDGET||[]).forEach(function(x){b+=C.num(x.qty)*C.num(x.price)*100});return b}
-function budget(){
-  var arr=current(),t=toggles(),extra=(arr.length-20)*135000;
-  if(t.chaka)extra+=31000;if(t.midui)extra+=20000;
-  return Math.max(0,baseBudget()+extra);
-}
+function budget(){return 0;}
 function km(){var k=0;current().forEach(function(d){var m=String(d.drivingRaw||'').match(/(\d+)\s*[–-]\s*(\d+)\s*km|(\d+)\s*km/);if(m)k+=C.num(m[3]||m[2])});return k}
 function nights(){var n=0;current().forEach(function(d){if(d.lodging&&!/火车/.test(d.lodging))n++});return n}
 function maxAlt(){var a=0;current().forEach(function(d){var v=C.alt(d.lodgingAlt);if(v>a)a=v});return a}

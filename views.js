@@ -38,7 +38,7 @@ function home(days){
   var hero=C.photos('namtso')[0]||C.photos('yamdrok')[0]||C.photos('namcha')[0]||{file:'',title:'',author:'',license:''};
   var altData=days.map(function(d){return {label:d.day,v1:C.alt(d.lodgingAlt),v2:Math.max(C.alt(d.lodgingAlt),estimateMaxAlt(d))}});
   var stats=[['当前计划总天数',days.length,'天','可自由调整'],['景点完成进度',fs.inPlanVisited+' / '+fs.inPlan,'处',fs.progress+'%'],
-    ['预计旅行预算',C.money0(budget),'','规划数据'],['实际旅行支出',C.money0(actual),'','独立账本'],
+    ['实际旅行支出',C.money0(actual),'','独立账本'],
     ['出发日期',C.dateCN(P.getDeparture()),'',C.weekday(P.getDeparture())],['核心景点',P.coreSpotCount(),'处','优先保留'],
     ['预计住宿晚数',P.nights(),'晚',''],['预计总里程',P.km(),'km','估算']];
   return '<section class="view" id="view-home">'+
@@ -54,7 +54,7 @@ function home(days){
    '<div class="grid stat-grid">'+stats.map(function(s){return '<div class="stat"><div class="label">'+s[0]+'</div><div class="value">'+esc(s[1])+' <small>'+esc(s[2])+'</small></div><div class="hint">'+esc(s[3])+'</div></div>'}).join('')+'</div></div>'+
    overview(days)+'<div class="section"><div class="section-head"><h2>整体路线地图</h2><button class="btn sm" data-nav="map">打开地图 →</button></div>'+mapSVG(days)+'</div>'+
    '<div class="section"><div class="section-head"><h2>快捷入口</h2></div><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">'+
-   [['itinerary','🗓','每日行程与自由编辑'],['footprint','👣','旅行足迹与已完成景点'],['guide','◇','景点优先级与攻略'],['safety','△','海拔、驾驶与安全'],['train','🚄','Z165 青藏铁路观景'],['packing','✅','旅行准备清单'],['mine','☰','我的设置与数据备份'],['budget','¥','预计预算管理'],['ledger','📒','独立旅行账本']]
+   [['itinerary','🗓','每日行程与自由编辑'],['footprint','👣','旅行足迹与已完成景点'],['guide','◇','景点优先级与攻略'],['safety','△','海拔、驾驶与安全'],['train','🚄','Z165 青藏铁路观景'],['packing','✅','旅行准备清单'],['mine','☰','我的设置与数据备份'],['ledger','¥','旅行账本'],['ledger','📒','独立旅行账本']]
    .map(function(x){return '<button class="card" style="text-align:left;cursor:pointer" data-nav="'+x[0]+'"><div style="font-size:24px">'+x[1]+'</div><b>'+x[2]+'</b></button>'}).join('')+'</div></div>'+
    '<div class="section"><div class="section-head"><h2>旅行模块</h2><button class="btn sm" data-nav="modules">查看更多 →</button></div>'+
    '<div class="grid module-grid">'+(window.MODULES||[]).slice(0,4).map(function(m){return moduleCard(m,days)}).join('')+'</div></div>'+
@@ -80,7 +80,7 @@ function modulesView(days){
     ['纳木措','namtso'],['索松村额外住宿','songsongExtra'],['珠峰稳妥路线','everestSafe']];
   var t=P.toggles();
   return '<section class="view"><div class="section-head"><h2>旅行模块</h2><span class="eyebrow">Modules</span></div>'+
-   '<p class="muted small">关闭支线后前后路线会重新衔接，并自动重排天数、日期与预算。</p>'+
+   '<p class="muted small">关闭支线后前后路线会重新衔接，并自动重排天数与日期。</p>'+
    '<div class="grid module-grid" style="margin-top:16px">'+(window.MODULES||[]).map(function(m){return moduleCard(m,days)}).join('')+'</div>'+
    '<div class="section"><div class="section-head"><h2>可选模块开关</h2></div><div class="card">'+
    extra.map(function(x){return '<div class="between" style="padding:9px 0;border-bottom:1px solid var(--line)"><b>'+esc(x[0])+'</b>'+
@@ -309,25 +309,8 @@ function altitudeView(days){
 }
 
 /* ---------- 预计预算（规划数据） ---------- */
-function budgetView(){
-  var st=C.getStore(),paid=L.paidBudget(),total=P.budget();
-  var rows=(window.BUDGET||[]).map(function(b){
-    var q=st.budgetQty&&st.budgetQty[b.id]!=null?st.budgetQty[b.id]:b.qty;
-    var p=st.budgetPrice&&st.budgetPrice[b.id]!=null?st.budgetPrice[b.id]:b.price;
-    return {b:b,q:q,p:p,sub:Math.round(q)*Math.round(p*100)};
-  });
-  return '<section class="view"><div class="section-head"><h2>预计预算管理</h2><span class="eyebrow">Planning only</span></div>'+
-   '<div class="limit-note">预计预算属于旅行规划，可随计划调整；实际消费来自独立旅行账本，两者独立存储、互不覆盖。</div>'+
-   '<div class="grid stat-grid">'+[['预计总预算',C.money0(total)],['当前实际总支出',C.money0(L.totals().actual)],['预算剩余',C.money0(total-L.totals().actual)],
-    ['已支付（手动登记）',C.money0(paid)],['人均参考',C.money0(total/Math.max(1,st.people))]].map(function(s){return '<div class="stat"><div class="label">'+s[0]+'</div><div class="value">'+s[1]+'</div></div>'}).join('')+'</div>'+
-   '<div class="card" style="margin-top:16px"><div class="field-row"><div class="field"><label>出行人数</label><input type="number" id="peopleInput" min="1" value="'+st.people+'"></div>'+
-   '<div class="field"><label>已支付金额（元）</label><input type="number" id="paidBudgetInput" step="0.01" value="'+(paid/100).toFixed(2)+'"></div></div></div>'+
-   '<div class="section"><div class="section-head"><h2>预算明细</h2><button class="btn sm" data-action="save-budget">保存修改</button></div><div class="card"><div class="table-wrap"><table><thead><tr><th>费用类别</th><th>单位</th><th>数量</th><th>单价（元）</th><th class="num">小计</th></tr></thead><tbody>'+
-   rows.map(function(r){return '<tr><td>'+esc(r.b.name)+'</td><td>'+esc(r.b.unit)+'</td><td><input type="number" min="0" style="width:76px" data-bq="'+esc(r.b.id)+'" value="'+r.q+'"></td>'+
-    '<td><input type="number" min="0" step="0.01" style="width:96px" data-bp="'+esc(r.b.id)+'" value="'+r.p+'"></td><td class="num money">'+C.money(r.sub)+'</td></tr>'}).join('')+'</tbody></table></div></div></div></section>';
-}
+function budgetView(){return window.LedgerViews.ledgerHome(P.current());}
 
-/* ---------- 清单 ---------- */
 function packingView(){
   var done=C.getStore().packing||{};
   return '<section class="view"><div class="section-head"><h2>旅行准备清单</h2></div><p class="muted small">勾选状态自动保存在本机。</p>'+
@@ -342,7 +325,7 @@ function mineView(days){
   var opts=[['chaka','茶卡盐湖','+1 天'],['glacier','然乌湖＋来古冰川','关闭 -2 天'],['midui','米堆冰川','仅在冰川支线开启时可选'],
     ['dingjie','定结雪山＋十万沙丘','关闭后仍为20天'],['namtso','纳木措','固定保留'],['songsongExtra','索松村额外住宿','+1 天'],['everestSafe','珠峰稳妥路线','+1 天']];
   return '<section class="view"><div class="section-head"><h2>我的 · 设置与数据</h2></div>'+
-   '<div class="grid stat-grid">'+[['计划天数',days.length+' 天'],['已游玩',fs.visited+' 处'],['预计预算',C.money0(P.budget())],['实际支出',C.money0(L.totals().actual)]].map(function(s){return '<div class="stat"><div class="label">'+s[0]+'</div><div class="value">'+s[1]+'</div></div>'}).join('')+'</div>'+
+   '<div class="grid stat-grid">'+[['计划天数',days.length+' 天'],['已游玩',fs.visited+' 处'],['实际支出',C.money0(L.totals().actual)]].map(function(s){return '<div class="stat"><div class="label">'+s[0]+'</div><div class="value">'+s[1]+'</div></div>'}).join('')+'</div>'+
    '<div class="section"><div class="section-head"><h2>模块开关</h2></div><div class="card">'+opts.map(function(o){
      var dis=o[0]==='namtso'||(o[0]==='midui'&&!t.glacier);
      return '<div class="between" style="padding:9px 0;border-bottom:1px solid var(--line)"><div><b>'+esc(o[1])+'</b> <span class="tiny muted">'+esc(o[2])+'</span></div>'+

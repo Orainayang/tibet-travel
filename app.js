@@ -245,7 +245,7 @@ document.addEventListener('change',function(e){
   if(t.getAttribute&&t.getAttribute('data-record-photo')){var day=t.getAttribute('data-record-photo');resizeImage(t.files[0],function(data){var all=C.getStore().records||{},one=all[day]||{};one.photo=data;all[day]=one;var s=C.getStore();s.records=all;C.saveSettings(s);render()});return}
   if(t.getAttribute&&t.getAttribute('data-record')){var day2=t.getAttribute('data-day'),all2=C.getStore().records||{},one2=all2[day2]||{};one2[t.getAttribute('data-record')]=t.type==='checkbox'?t.checked:t.value;all2[day2]=one2;var s2=C.getStore();s2.records=all2;C.saveSettings(s2);return}
   if(t.id==='dayFilter'){state.filter=t.value;render();return}
-  if(t.id==='dayJump'&&t.value){var node=document.getElementById('day-'+t.value);if(node)node.scrollIntoView({behavior:'smooth'});return}
+  if(t.id==='dayJump'&&t.value){var target=t.value;state.query='';state.filter='全部';state.openDays[target]=true;render();var jump=document.getElementById('dayJump');if(jump)jump.value=target;var node=document.getElementById('day-'+target);if(node){node.style.scrollMarginTop='90px';node.scrollIntoView({behavior:'smooth',block:'start'})}return}
   ['fMember','fCat','fPayer','fScope','fDate'].forEach(function(id){if(t.id===id){var map={fMember:'member',fCat:'cat',fPayer:'payer',fScope:'scope',fDate:'date'};state.filters[map[id]]=t.value;render()}});
 });
 document.addEventListener('input',function(e){

@@ -125,14 +125,18 @@ function spotCard(s,days){
    days.map(function(d){return '<option value="'+d.day+'">'+d.day+' '+esc(d.route)+'</option>'}).join('')+'</select></div></div>';
 }
 function estimateMaxAlt(d){
-  if(d.day==='D4'||/青藏铁路|Z165/.test(d.route))return 5072;
-  var names=(d.spots||[]).map(function(s){return s.name}).join('');
-  if(/珠峰|大本营/.test(names))return 5200;
-  if(/纳木措/.test(names))return 4718;
-  if(/卡若拉|加乌拉|普士拉/.test(names))return 5000;
-  if(/来古|米堆|冰川/.test(names))return 4300;
-  if(/然乌/.test(names))return 4000;
-  var a=C.alt(d.lodgingAlt);return a?a:0;
+  var route=String(d.route||''), names=route+' '+(d.spots||[]).map(s=>s.name).join(' '), a=C.alt(d.lodgingAlt)||0;
+  if(/返程/.test(route)&&!a)return null;
+  var rules=[[/青藏铁路|Z165|唐古拉山区域/,5072],[/青海湖|日月山/,3520],[/色季拉|鲁朗/,4728],[/来古/,4300],[/然乌/,3850],[/纳木措/,5190],[/卡若拉/,5036],[/加乌拉/,5210],[/珠峰大本营/,5200],[/普士拉/,4900],[/巴松措/,3480],[/索松村|雅尼湿地/,3000]];
+  if(/波密|索松村/.test(route)&&/鲁朗/.test(route)&&!/拉萨/.test(route)&&!/索松村/.test(route))rules=rules.filter(r=>r[1]!==4728);
+  return Math.max(a,...rules.filter(r=>r[0].test(names)).map(r=>r[1]))||null;
+}
+function altitudeBars(data){
+  var w=Math.max(760,72+data.length*76),h=340,base=292,top=30,max=Math.max(6000,...data.map(d=>Math.max(d.v1||0,d.v2||0))),scale=(base-top)/max;
+  var svg='<svg role="img" aria-label="每日住宿与最高游览海拔对比" viewBox="0 0 '+w+' '+h+'" style="width:100%;min-width:'+w+'px;display:block">';
+  for(var v=0;v<=max;v+=1000){var y=base-v*scale;svg+='<line x1="48" x2="'+(w-12)+'" y1="'+y+'" y2="'+y+'" stroke="#cbd5e1" stroke-dasharray="3 4"/><text x="42" y="'+(y+4)+'" text-anchor="end" font-size="11" fill="#64748b">'+v+'</text>'}
+  data.forEach(function(d,i){var x=52+i*76;[[d.v1,'#087f8c'],[d.v2,'#b45309']].forEach(function(pair,j){var val=pair[0],bx=x+j*32;if(!val){svg+='<text x="'+(bx+14)+'" y="'+(base-5)+'" text-anchor="middle" font-size="10" fill="#64748b">—</text>';return}var y=base-val*scale;svg+='<rect x="'+bx+'" y="'+y+'" width="28" height="'+(base-y)+'" rx="3" fill="'+pair[1]+'"/><text x="'+(bx+14)+'" y="'+(y-6)+'" text-anchor="middle" font-size="10" font-weight="600" fill="'+pair[1]+'">'+val+'</text>'});svg+='<text x="'+(x+30)+'" y="'+(base+20)+'" text-anchor="middle" font-size="12" fill="#475569">'+esc(d.day)+'</text>'});
+  return '<div style="display:flex;gap:18px;flex-wrap:wrap;margin:12px 0"><span style="color:#087f8c">■ 住宿海拔</span><span style="color:#b45309">■ 当日最高海拔（估算）</span><span>单位：m</span></div><div style="overflow-x:auto">'+svg+'</svg></div><p class="muted small">可横向滑动查看全部日期；— 表示无固定住宿或数据待确认。最高海拔含途经山口及铁路，均为规划估算，非实测。</p>';
 }
 function dayCard(d,days){
   var rec=C.getStore().records||{};
@@ -296,8 +300,8 @@ function altitudeView(days){
     if(/然乌/.test(n))marks[d.day]='然乌湖游览';if(/卡若拉/.test(n))marks[d.day]='卡若拉冰川';
     if(/加乌拉|珠峰/.test(n))marks[d.day]='加乌拉 / 珠峰';if(/纳木措/.test(n))marks[d.day]='纳木措 4718m';});
   var data=days.map(function(d){return {label:d.day,day:d.day,v1:C.alt(d.lodgingAlt),v2:estimateMaxAlt(d)}});
-  return '<section class="view"><div class="section-head"><h2>海拔与安全</h2></div><div class="limit-note"><b>说明：</b>海拔用于观察睡眠海拔趋势，部分为估算，不构成个人安全判断。</div>'+
-   '<div class="chart-box">'+Ch.lineChart(data,{marks:marks,series:[{key:'v1',name:'睡眠海拔（住宿）',color:'#2b6f92'},{key:'v2',name:'最高游览海拔（估算）',color:'#b8794b'}]})+'</div>'+
+  return '<section class="view"><div class="section-head"><h2>海拔与安全</h2></div><div class="limit-note"><b>说明：</b>对比住宿海拔与当日最高海拔，部分为估算，不构成个人安全判断。</div>'+
+   '<div class="chart-box">'+altitudeBars(data)+'</div>'+
    '<div class="section"><div class="section-head"><h2>冬季安全提醒</h2></div><div class="card"><ul class="line-list">'+
    ['Z165实际运行时刻、12月来古冰川开放与蓝冰情况、纳木措冬季开放均待核实。','普士拉山口与冰淇淋雪山准确位置、珠峰小镇住宿海拔、然乌湖住宿条件待核实。',
     '冬季道路结冰与交通管制随时变化，卡定沟等离开主路点位结冰则取消。','3000米以上睡眠海拔增幅尽量不超过500米；明显不适立即下降海拔并就医。',

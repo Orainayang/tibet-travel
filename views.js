@@ -25,12 +25,15 @@ var rankColors={S:'#b45309',A:'#087f8c',B:'#64748b'};
 function rankOf(name){var aliases={'索松村':'南迦巴瓦峰','鲁朗':'鲁朗林海','羊湖':'羊卓雍措','南迦巴瓦':'南迦巴瓦峰'};name=aliases[name]||name;return ['S','A','B'].find(function(l){return priorityRows().some(function(r){return r[0]===l&&String(r[1]).split(/[、，,]/).some(function(n){n=n.trim();return n&&name&&(name.includes(n)||n.includes(name))})})})||''}
 function dayRank(d){var names=(d.spots||[]).map(s=>s.name);var route=d.route||'';return ['S','A','B'].find(l=>names.some(n=>rankOf(n)===l)||priorityRows().some(r=>r[0]===l&&String(r[1]).split(/[、，,]/).some(n=>n.trim()&&route.includes(n.trim()))))||''}
 function rankBadge(l){return l?'<span style="display:inline-block;background:'+rankColors[l]+';color:white;border-radius:7px;padding:3px 9px;font-weight:700;font-size:12px;margin:0 6px">'+l+'</span>':''}
-function priorityView(){var rows=priorityRows();return '<section class="view"><h1>景点攻略</h1><p class="muted">优先级与地图、每日行程联动，修改后自动保存。</p>'+['S','A','B'].map(function(l){return '<div class="card" style="margin:16px 0;border-top:4px solid '+rankColors[l]+'"><h2>'+rankBadge(l)+({S:'核心优先游览',A:'默认保留',B:'弹性游览'}[l])+'</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:14px">'+rows.map(function(r,i){if(r[0]!==l)return '';return '<div style="padding:14px;border:1px solid '+rankColors[l]+'55;border-radius:12px;background:'+rankColors[l]+'0b"><label>优先级 <select data-priority="'+i+',0">'+['S','A','B'].map(x=>'<option '+(x===l?'selected':'')+'>'+x+'</option>').join('')+'</select></label>'+r.slice(1).map((x,j)=>'<label style="display:block;margin-top:8px;font-size:12px">'+['景点','景观类型','游览原则'][j]+'<input style="width:100%;display:block" data-priority="'+i+','+(j+1)+'" value="'+esc(x)+'"></label>').join('')+'</div>'}).join('')+'</div></div>'}).join('')+'<div class="row"><button class="btn" data-priority-add>新增景点</button><button class="btn" data-priority-reset>恢复默认模板</button><button class="btn primary" data-nav="gallery">景点参考图库</button></div></section>'}
+function priorityView(){var rows=priorityRows(),days=P.current(),text=days.map(d=>d.route+' '+d.spots.map(x=>x.name).join(' ')).join(' '); return '<section class="view"><h1>景点攻略</h1><p class="muted">优先级与地图、每日行程联动，修改后自动保存。</p>'+['S','A','B'].map(function(l){return '<div class="card" style="margin:16px 0;border-top:4px solid '+rankColors[l]+'"><h2>'+rankBadge(l)+({S:'核心优先游览',A:'默认保留',B:'弹性游览'}[l])+'</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:14px">'+rows.map(function(r,i){if(r[0]!==l)return '';if(P.scheme()!=='original'&&r[1]&&!String(r[1]).split(/[、，,]/).some(n=>text.includes(n.trim())||(n.includes('珠峰')&&text.includes('珠峰'))||(n==='南迦巴瓦峰'&&text.includes('索松村'))))return '';return '<div style="padding:14px;border:1px solid '+rankColors[l]+'55;border-radius:12px;background:'+rankColors[l]+'0b"><label>优先级 <select data-priority="'+i+',0">'+['S','A','B'].map(x=>'<option '+(x===l?'selected':'')+'>'+x+'</option>').join('')+'</select></label>'+r.slice(1).map((x,j)=>'<label style="display:block;margin-top:8px;font-size:12px">'+['景点','景观类型','游览原则'][j]+'<input style="width:100%;display:block" data-priority="'+i+','+(j+1)+'" value="'+esc(x)+'"></label>').join('')+'</div>'}).join('')+'</div></div>'}).join('')+'<div class="row"><button class="btn" data-priority-add>新增景点</button><button class="btn" data-priority-reset>恢复默认模板</button><button class="btn primary" data-nav="gallery">景点参考图库</button></div></section>'}
 function driveHours(d){var m=String(d.drivingRaw||'').match(/(\d+(?:\.\d+)?)\s*[–—-]\s*(\d+(?:\.\d+)?)\s*h/i)||String(d.drivingRaw||'').match(/(\d+(?:\.\d+)?)\s*h/i);return m?Number(m[2]||m[1]):0}
-function safetyView(days){var risks=[['拉萨—鲁朗','冰雪山口','无法安全抵达时住林芝'],['然乌湖、来古冰川','往返可能超过9小时','启用机动日，不赶夜路'],['索松村','日落前抵达不确定','湿地、大峡谷可顺延'],['纳木措','高海拔、临时闭园','优先顺延；身体不适不前往'],['珠峰','接驳及游览时间不足','次日上午补游，必要时取消定结'],['定结','连续高海拔住宿','身体不适则取消并下撤'],['定结—拉萨','长途驾驶','必要时临时中转']];return altitudeView(days).replace('</section>','')+panel('住宿海拔汇总',table(['日期','住宿','海拔'],days.filter(function(d){return d.lodging&&d.lodging!=='—'}).map(function(d){return [d.day+' '+d.date,d.lodging,d.lodgingAlt?d.lodgingAlt+'m':'动态 / 待确认']})))+panel('每日驾驶强度',days.filter(d=>driveHours(d)>0).map(function(d){var h=driveHours(d);return '<div style="margin:12px 0"><div class="between"><b>'+esc(d.day+' '+d.route)+'</b><span>'+h+'h 上限</span></div><div style="height:8px;background:#e5e7eb;border-radius:8px"><div style="height:8px;border-radius:8px;width:'+Math.min(100,h*10)+'%;background:'+(h>9?'#c65b43':h>5?'#b68b40':'#438c80')+'"></div></div></div>'}).join('')+'<p class="muted small">仅统计可解析的驾驶时长，不含游览；超过9小时优先调整。</p>')+panel('风险及备用方案',table(['路段','主要问题','备用方案'],risks))+'<div class="row"><button class="btn" data-nav="packing">旅行准备清单</button><button class="btn" data-nav="modules">行程模块与机动日</button></div></section>'}
+function safetyView(days){var risks=[['拉萨—鲁朗','冰雪山口','无法安全抵达时住林芝'],['然乌湖、来古冰川','往返可能超过9小时','启用机动日，不赶夜路'],['索松村','日落前抵达不确定','湿地、大峡谷可顺延'],['纳木措','高海拔、临时闭园','优先顺延；身体不适不前往'],['珠峰','接驳及游览时间不足','次日上午补游，必要时取消定结'],['定结','连续高海拔住宿','身体不适则取消并下撤'],['定结—拉萨','长途驾驶','必要时临时中转']];return altitudeView(days).replace('</section>','')+panel('住宿海拔汇总',table(['日期','住宿','海拔'],days.filter(function(d){return d.lodging&&d.lodging!=='—'}).map(function(d){return [d.day+' '+d.date,d.lodging,d.lodgingAlt?d.lodgingAlt+'m':'动态 / 待确认']})))+panel('每日驾驶强度',days.filter(d=>driveHours(d)>0).map(function(d){var h=driveHours(d);return '<div style="margin:12px 0"><div class="between"><b>'+esc(d.day+' '+d.route)+'</b><span>'+h+'h 上限</span></div><div style="height:8px;background:#e5e7eb;border-radius:8px"><div style="height:8px;border-radius:8px;width:'+Math.min(100,h*10)+'%;background:'+(h>9?'#c65b43':h>5?'#b68b40':'#438c80')+'"></div></div></div>'}).join('')+'<p class="muted small">仅统计可解析的驾驶时长，不含游览；超过9小时优先调整。</p>')+panel('风险及备用方案',table(['路段','主要问题','备用方案'],risks.filter(r=>{var t=days.map(d=>d.route).join(' ');return r[0]==='拉萨—鲁朗'?t.includes('鲁朗'):r[0].split('、').some(n=>t.includes(n))}).concat(P.scheme()==='original'?[]:[['林芝初抵','高原适应','休整两晚；不适不翻山'],['D12','是否继续珠峰','身体不适不继续上升']])))+'<div class="row"><button class="btn" data-nav="packing">旅行准备清单</button><button class="btn" data-nav="modules">行程模块与机动日</button></div></section>'}
 function priorityRows(){try{return JSON.parse(localStorage.getItem('tibet.priority.v1'))||priorities.map(r=>r.slice())}catch(e){return priorities.map(r=>r.slice())}}
 document.addEventListener('change',function(e){var k=e.target.getAttribute('data-priority');if(k){var a=k.split(','),r=priorityRows();r[a[0]][a[1]]=e.target.value;localStorage.setItem('tibet.priority.v1',JSON.stringify(r));if(a[1]==='0')document.getElementById('main').innerHTML=priorityView()}});
 document.addEventListener('click',function(e){if(e.target.closest('[data-priority-add]')){var r=priorityRows();r.push(['B','','','']);localStorage.setItem('tibet.priority.v1',JSON.stringify(r));document.getElementById('main').innerHTML=priorityView()}if(e.target.closest('[data-priority-reset]')&&confirm('恢复默认优先级模板？')){localStorage.removeItem('tibet.priority.v1');document.getElementById('main').innerHTML=priorityView()}});
+function schemePanel(){return '<div class="card" style="margin:12px 0"><b>旅行方案</b><div class="row" style="margin-top:8px">'+[['original','A - 青藏线版本'],['3a','B - 林芝进藏13天精华版'],['3b','C - 林芝进藏16天完整版']].map(function(x){return '<button class="btn sm '+(P.scheme()===x[0]?'primary':'')+'" data-scheme="'+x[0]+'">'+x[1]+'</button>'}).join('')+'</div><p class="muted small">各方案独立保存行程编辑；账本与景点足迹共用。D12可选择是否继续珠峰。</p></div>'}
+document.addEventListener('click',function(e){var b=e.target.closest('[data-scheme]');if(b){P.selectScheme(b.dataset.scheme);App.state.query='';App.state.filter='全部';App.state.openDays={};App.state.mapMode='plan';App.render()}});
+function realMap(days){var links=days.map(function(d){var names=d.route.split('—').filter(Boolean);if(names.length<2||/飞机|铁路/.test(d.drivingRaw)||/休整/.test(d.route))return '';var url='https://uri.amap.com/navigation?from='+encodeURIComponent(names[0])+'&to='+encodeURIComponent(names[names.length-1])+'&mode=car&callnative=1';return '<div style="margin:8px 0"><b>'+esc(d.day+' '+d.route)+'</b> <a target="_blank" rel="noopener" href="https://www.amap.com/search?query='+encodeURIComponent(names.join(' '))+'">高德地图搜索</a> · <a target="_blank" rel="noopener" href="https://www.openstreetmap.org/search?query='+encodeURIComponent(names[1])+'">地理位置</a></div>'}).join('');return '<div class="card" style="margin:12px 0"><b>真实地理底图（在线）</b><iframe title="西藏真实地图" loading="lazy" style="width:100%;height:340px;border:0" src="https://www.openstreetmap.org/export/embed.html?bbox='+ (P.scheme()==='original'?'84%2C26%2C103%2C38':P.scheme()==='3a'?'89%2C27%2C98%2C32':'85%2C27%2C98%2C32') +'&amp;layer=mapnik"></iframe><p class="muted small">© OpenStreetMap contributors。在线底图不含已核验的逐段道路轨迹；下方可打开地图查询，离线请查看原路线示意及行程表。</p><details><summary>每日地图查询</summary>'+links+'</details></div>'}
 /* ---------- 首页 ---------- */
 function home(days){
   var st=C.getStore(),fs=F.stats(days),budget=P.budget(),actual=L.totals().actual;
@@ -44,10 +47,10 @@ function home(days){
   return '<section class="view" id="view-home">'+
    '<div class="hero">'+(hero.file?'<img class="hero-img" src="'+esc(hero.file)+'" alt="西藏雪山与高山湖泊">':'')+'<div class="hero-shade"></div>'+
    '<div class="hero-body"><div class="hero-kicker">WINTER TIBET · DECEMBER</div><h1>一路向西 · 我的西藏冬季旅行</h1>'+
-   '<p class="subtitle">从青海湖到喜马拉雅，在雪山、冰川与高原湖泊之间旅行</p>'+
-   '<div class="row" style="margin-top:20px"><span class="chip core">默认 20 天</span><span class="chip">Z165 青藏铁路</span><span class="chip">雪山 · 冰川 · 湖泊</span><span class="chip">'+days.length+' 天当前计划</span></div></div>'+
+   '<p class="subtitle">'+(P.scheme()==='original'?'从青海湖到喜马拉雅':'从成都飞林芝，沿藏东南前往拉萨')+'，在雪山、冰川与高原湖泊之间旅行</p>'+
+   '<div class="row" style="margin-top:20px"><span class="chip core">'+(P.scheme()==='original'?'A · 青藏线':P.scheme()==='3a'?'B · 林芝13天':'C · 林芝16天')+'</span><span class="chip">'+(P.scheme()==='original'?'Z165 青藏铁路':'成都飞林芝')+'</span><span class="chip">雪山 · 冰川 · 湖泊</span><span class="chip">'+days.length+' 天当前计划</span></div></div>'+
    (hero.file?'<div class="hero-photo-credit">'+esc(hero.title+' / '+hero.author+' / '+hero.license)+'</div>':'')+'</div>'+
-   '<div class="card" style="margin-top:16px"><div class="between"><div><b>距离出发</b><div class="muted small">修改日期后，计划行程日期自动顺延；实际消费日期不受影响</div></div>'+
+   schemePanel()+'<div class="card" style="margin-top:16px"><div class="between"><div><b>距离出发</b><div class="muted small">修改日期后，计划行程日期自动顺延；实际消费日期不受影响</div></div>'+
    '<div class="row"><div class="countdown">'+(left>=0?'还有 <b>'+left+'</b> 天':'已出发 <b>'+Math.abs(left)+'</b> 天')+'</div>'+
    '<input type="date" id="departureInput" value="'+esc(P.getDeparture())+'" style="width:150px"><button class="btn primary" data-action="save-departure">更新</button></div></div></div>'+
    '<div class="section"><div class="section-head"><h2>行程概览</h2><span class="eyebrow">Overview</span></div>'+
@@ -78,7 +81,7 @@ function moduleCard(m,days){
 function modulesView(days){
   var extra=[['茶卡盐湖','chaka'],['然乌湖＋来古冰川','glacier'],['米堆冰川','midui'],['定结雪山＋十万沙丘','dingjie'],
     ['纳木措','namtso'],['索松村额外住宿','songsongExtra'],['珠峰稳妥路线','everestSafe']];
-  var t=P.toggles();
+  var t=P.toggles();if(P.scheme()!=='original')extra=extra.filter(x=>x[1]==='dingjie'&&P.scheme()==='3b');
   return '<section class="view"><div class="section-head"><h2>旅行模块</h2><span class="eyebrow">Modules</span></div>'+
    '<p class="muted small">关闭支线后前后路线会重新衔接，并自动重排天数与日期。</p>'+
    '<div class="grid module-grid" style="margin-top:16px">'+(window.MODULES||[]).map(function(m){return moduleCard(m,days)}).join('')+'</div>'+
@@ -147,7 +150,7 @@ function dayCard(d,days){
    '<div class="day-meta"><span class="chip">'+esc(d.moduleKey||'主线')+'</span><span class="chip">'+d.spots.length+' 景点</span>'+
    (mine.done?'<span class="chip onroute">已完成</span>':'')+'</div></div><span class="muted small">'+(window.App&&App.isOpen(d.day)?'收起 ↑':'展开 ↓')+'</span></div>'+
    '<div class="day-body '+((window.App&&App.isOpen(d.day))?'':'hidden')+'" data-body="'+d.day+'">'+
-   '<div class="block"><div class="block-title">自由编辑本日</div><div class="field-row">'+
+   (P.scheme()!=='original'&&d.day==='D12'?'<div class="note-box"><b>D12 分流决策：羊湖后返回拉萨或继续珠峰</b>'+schemePanel()+'</div>':'')+'<div class="block"><div class="block-title">自由编辑本日</div><div class="field-row">'+
    '<div class="field"><label>路线</label><input type="text" data-dayfield="route" data-day="'+d.day+'" value="'+esc(d.route||'')+'"></div>'+
    '<div class="field"><label>住宿</label><input type="text" data-dayfield="lodging" data-day="'+d.day+'" value="'+esc(d.lodging||'')+'"></div>'+
    '<div class="field"><label>住宿海拔</label><input type="text" data-dayfield="lodgingAlt" data-day="'+d.day+'" value="'+esc(d.lodgingAlt||'')+'"></div>'+
@@ -186,7 +189,7 @@ function itineraryView(days){
   return '<section class="view"><div class="between"><div><div class="eyebrow" style="color:var(--lake)">Day by day</div><h2 style="font-size:22px">行程 · 当前 '+days.length+' 天</h2></div>'+
    '<div class="row"><button class="btn sm" data-action="add-day">＋ 新增一天</button><button class="btn sm" data-action="add-rest-day">＋ 休整日</button>'+
    '<button class="btn sm" data-action="export-itinerary">导出 Excel</button><button class="btn sm" onclick="window.print()">打印 / PDF</button></div></div>'+
-   '<div class="card" style="margin-top:14px"><div class="field-row">'+
+   schemePanel()+'<div class="card" style="margin-top:14px"><div class="field-row">'+
    '<div class="field"><label>搜索景点 / 路线 / 天数</label><input type="search" id="daySearch" value="'+esc(q)+'" placeholder="例如：冰川、南迦巴瓦、羊湖"></div>'+
    '<div class="field"><label>筛选</label><select id="dayFilter">'+['全部','核心景点','含未完成'].map(function(x){return '<option '+(filter===x?'selected':'')+'>'+x+'</option>'}).join('')+'</select></div>'+
    '<div class="field"><label>快速跳转</label><select id="dayJump"><option value="">选择天数…</option>'+days.map(function(d){return '<option value="'+d.day+'">'+d.day+' · '+esc(d.route)+'</option>'}).join('')+'</select></div></div>'+
@@ -261,7 +264,7 @@ function mapSVG(days,mode){
   for(var y=80;y<580;y+=80)grid+='<line x1="50" y1="'+y+'" x2="930" y2="'+y+'" stroke="#e4ebee"/>';
   // 计划地图随当前行程变化：仅绘制当前计划中出现的点位
   var active={},railway=['西宁','格尔木','昆仑山·玉珠峰','可可西里·沱沱河','唐古拉山','错那湖','那曲','当雄','拉萨'];
-  railway.forEach(function(k){active[k]=1});
+  if(P.scheme()==='original')railway.forEach(function(k){active[k]=1});
   (days||[]).forEach(function(d){
     var txt=[d.route||'',d.lodging||''].concat((d.spots||[]).map(function(x){return x.name||''})).join(' ');
     keys.forEach(function(k){if(txt.indexOf(k)>=0)active[k]=1});
@@ -276,17 +279,14 @@ function mapSVG(days,mode){
     var visited=F.visited().filter(function(x){return G[x.name]});
     routes='<polyline points="'+visited.map(function(x){return pts[x.name].x+','+pts[x.name].y}).join(' ')+'" fill="none" stroke="#2f7d5b" stroke-width="3" stroke-dasharray="2 4"/>';
   }else{
-    routes=path(railway,'#7b8794')+
-      path(['西宁','青海湖','茶卡盐湖','格尔木'],'#2f7d9e',true)+path(['拉萨','林芝','鲁朗','波密','然乌湖','来古冰川'],'#4a8fa3',true)+
-      path(['林芝','索松村','拉萨'],'#3d6b8e')+path(['拉萨','羊卓雍措','卡若拉冰川','日喀则','定日','珠峰大本营'],'#6d5a86')+
-      path(['定日','定结','日喀则'],'#6d5a86',true)+path(['拉萨','纳木措','那曲'],'#2b6f92',true);
+    routes=(days||[]).map(function(d){var route=String(d.route||'').replace(/羊湖/g,'羊卓雍措').replace(/大峡谷/g,'雅鲁藏布大峡谷');var seq=route.split('—').map(function(n){return keys.find(k=>n===k)||keys.filter(k=>n.includes(k)).sort((a,b)=>b.length-a.length)[0]}).filter(Boolean);return path(seq,'#347f99',/飞机|铁路|Z165/.test(d.drivingRaw+' '+route))}).join('');if(P.scheme()==='original')routes+=path(railway,'#7b8794',true);
   }
   var marks=keys.filter(function(k){return mode==='actual'||active[k]}).map(function(k){
     var p=pts[k],actual=mode==='actual'&&F.visited().some(function(x){return x.name===k});
     var rank=rankOf(k);var c=rank?rankColors[rank]:actual?'#2f7d5b':(k.indexOf('铁路')>=0||k==='格尔木'?'#7b8794':'#2b6f92');
     return '<g class="map-marker" data-action="map-marker" data-place="'+esc(k)+'"><circle cx="'+p.x+'" cy="'+p.y+'" r="'+(rank==='S'?9:rank?7:actual?7:5.5)+'" fill="'+c+'"/><text class="map-label" x="'+(p.x+8)+'" y="'+(p.y+4)+'">'+esc(k)+(rank?' · '+rank:'')+'</text></g>';
   }).join('');
-  return '<div class="map-shell"><svg class="map-svg" viewBox="0 0 980 610"><rect width="980" height="610" fill="#f5f9fa"/>'+grid+land+routes+marks+
+  return (mode==='actual'?'':realMap(days))+'<div class="map-shell"><svg class="map-svg" viewBox="0 0 980 610"><rect width="980" height="610" fill="#f5f9fa"/>'+grid+land+routes+marks+
    '<text x="62" y="52" font-size="13" fill="#6b7280">'+(mode==='actual'?'实际旅行足迹':'路线示意图 · 非导航地图')+' · 坐标线性投影，仅供理解顺序</text></svg>'+
    '<div class="row" style="padding:10px">'+rankBadge('S')+'核心优先 '+rankBadge('A')+'默认保留 '+rankBadge('B')+'弹性游览</div><div class="map-note">当前未配置地图 API Key，使用明确标注的路线示意图，不提供也不伪造实时导航距离与车程。</div></div>';
 }
@@ -295,7 +295,7 @@ function mapView(days){var mode=window.App&&App.state.mapMode||'plan';
 
 /* ---------- 海拔安全 ---------- */
 function altitudeView(days){
-  var marks={'D4':'铁路唐古拉山区域'};
+  var marks=P.scheme()==='original'?{'D4':'铁路唐古拉山区域'}:{};
   days.forEach(function(d){var n=d.spots.map(function(s){return s.name}).join('');
     if(/然乌/.test(n))marks[d.day]='然乌湖游览';if(/卡若拉/.test(n))marks[d.day]='卡若拉冰川';
     if(/加乌拉|珠峰/.test(n))marks[d.day]='加乌拉 / 珠峰';if(/纳木措/.test(n))marks[d.day]='纳木措 4718m';});
@@ -305,7 +305,7 @@ function altitudeView(days){
    '<div class="section"><div class="section-head"><h2>冬季安全提醒</h2></div><div class="card"><ul class="line-list">'+
    ['Z165实际运行时刻、12月来古冰川开放与蓝冰情况、纳木措冬季开放均待核实。','普士拉山口与冰淇淋雪山准确位置、珠峰小镇住宿海拔、然乌湖住宿条件待核实。',
     '冬季道路结冰与交通管制随时变化，卡定沟等离开主路点位结冰则取消。','3000米以上睡眠海拔增幅尽量不超过500米；明显不适立即下降海拔并就医。',
-    '保留临时休整日与取消高海拔景点的灵活性，不为维持20天行程强行赶路。'].map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul></div></div></section>';
+    '保留临时休整日与取消高海拔景点的灵活性，不为维持固定天数强行赶路。'].map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul></div></div></section>';
 }
 
 /* ---------- 预计预算（规划数据） ---------- */
@@ -323,7 +323,8 @@ function packingView(){
 function mineView(days){
   var t=P.toggles(),fs=F.stats(days);
   var opts=[['chaka','茶卡盐湖','+1 天'],['glacier','然乌湖＋来古冰川','关闭 -2 天'],['midui','米堆冰川','仅在冰川支线开启时可选'],
-    ['dingjie','定结雪山＋十万沙丘','关闭后仍为20天'],['namtso','纳木措','固定保留'],['songsongExtra','索松村额外住宿','+1 天'],['everestSafe','珠峰稳妥路线','+1 天']];
+    ['dingjie','定结雪山＋十万沙丘','关闭后总天数不变'],['namtso','纳木措','固定保留'],['songsongExtra','索松村额外住宿','+1 天'],['everestSafe','珠峰稳妥路线','+1 天']];
+  if(P.scheme()!=='original')opts=opts.filter(x=>x[0]==='dingjie'&&P.scheme()==='3b');
   return '<section class="view"><div class="section-head"><h2>我的 · 设置与数据</h2></div>'+
    '<div class="grid stat-grid">'+[['计划天数',days.length+' 天'],['已游玩',fs.visited+' 处'],['实际支出',C.money0(L.totals().actual)]].map(function(s){return '<div class="stat"><div class="label">'+s[0]+'</div><div class="value">'+s[1]+'</div></div>'}).join('')+'</div>'+
    '<div class="section"><div class="section-head"><h2>模块开关</h2></div><div class="card">'+opts.map(function(o){
@@ -349,14 +350,14 @@ function mineView(days){
    '<button class="btn" data-action="backup-json">备份全部数据 JSON</button><button class="btn" data-action="restore-json">恢复备份</button>'+
    '<button class="btn" data-action="export-itinerary">导出行程 Excel</button><button class="btn" data-action="export-ledger">导出账本 Excel</button>'+
    '<input type="file" id="restoreFile" accept="application/json" style="display:none"></div>'+
-   '<div class="row" style="margin-top:14px"><button class="btn danger" data-action="reset-plan">恢复默认20天行程</button>'+
+   '<div class="row" style="margin-top:14px"><button class="btn danger" data-action="reset-plan">恢复当前方案默认行程</button>'+
    '<span class="muted small">仅重置计划行程；旅行足迹与账本数据不会删除，操作前会二次确认。</span></div></div></div>'+
    '<div class="section"><div class="section-head"><h2>功能边界</h2></div><div class="card"><ul class="line-list">'+
    ['账本为单人管理模式：数据保存在本机，不是多人实时同步；真正协作需后端与身份认证。','计划行程、旅行足迹、账本、预算、清单各自独立存储，不会级联删除。',
     '地图为路线示意图；行程强度只表示游览与赶路节奏，不代表健康风险等级。'].map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul></div></div></section>';
 }
 
-var Views={guide:priorityView,safety:safetyView,home:home,modules:modulesView,itinerary:itineraryView,footprint:footprintView,train:trainView,gallery:galleryView,
+var Views={schemePanel:schemePanel,guide:priorityView,safety:safetyView,home:home,modules:modulesView,itinerary:itineraryView,footprint:footprintView,train:trainView,gallery:galleryView,
   map:mapView,altitude:altitudeView,budget:budgetView,packing:packingView,mine:mineView,mapSVG:mapSVG,dayCard:dayCard,moduleCard:moduleCard};
 window.Views=Views;
 })();

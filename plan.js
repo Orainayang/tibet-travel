@@ -6,21 +6,26 @@ var BASE=(window.PLAN20||[]);
 var DEFAULT_TOGGLES={chaka:false,glacier:true,midui:false,dingjie:true,namtso:true,songsongExtra:false,everestSafe:false};
 var PK='plan.v2.';
 function clone(o){return JSON.parse(JSON.stringify(o))}
-function get(k,def){return Store.get(PK+k,def)}
-function set(k,v){return Store.set(PK+k,v)}
+function scheme(){return Store.get(PK+'scheme','original')}
+function get(k,def){return Store.get(PK+(scheme()==='original'||k==='departure'?'':scheme()+'.')+k,def)}
+function set(k,v){return Store.set(PK+(scheme()==='original'||k==='departure'?'':scheme()+'.')+k,v)}
+function selectScheme(v){if(!['original','3a','3b'].includes(v))return current();Store.set(PK+'scheme',v);return current()}
+function newDay(route,lodging,alt,slots,notes){return {moduleKey:'flight3',route:route,lodging:lodging,lodgingAlt:alt,drivingRaw:'飞机',intensity:'低',spots:[],slots:{morning:[slots],noon:[],afternoon:[],evening:['休息']},notes:notes,alternatives:['身体不适时减少活动']}}
+function route3(){var a=[newDay('杭州—成都','成都','500','按航班时间出发',['航班待确认']),newDay('成都—林芝','林芝','2900','抵达后入住休息',['初次进藏，避免剧烈活动']),newDay('林芝休整—尼洋河周边','林芝','2900','自然醒，视身体状态轻度散步',['持续不适不继续上升'])];a[2].drivingRaw='市区交通';a=a.concat(clone(BASE.slice(7,16)));a[3].route='林芝—色季拉山口—鲁朗';a[3].drivingRaw='70–90km / 2–3h';a[3].slots={morning:['身体适应良好再出发'],noon:['色季拉山口短暂停留'],afternoon:['鲁朗林海、鲁朗小镇'],evening:['入住鲁朗']};a[3].notes=['色季拉山口约4728m；不适则留林芝'];a[3].alternatives=['必要时增加林芝休整日'];a[9].route='拉萨休整—布达拉宫—大昭寺—八廓街';a[9].spots=clone(BASE[4].spots.concat(BASE[6].spots.slice(0,1)));a[9].slots={morning:['休息，视体力看布达拉宫'],noon:['休息'],afternoon:['八廓街、大昭寺外观'],evening:['早点休息']};a[11].route='拉萨—羊卓雍措—卡若拉冰川—满拉水库—日喀则';if(scheme()==='3a'){a[11].route='拉萨—羊卓雍措—卡若拉冰川—拉萨';a[11].lodging='拉萨';a[11].lodgingAlt='3650';a[11].drivingRaw='300–350km / 6–8h';a[11].spots=a[11].spots.slice(0,2);a[11].slots={morning:['羊卓雍措'],noon:['途中休息'],afternoon:['卡若拉冰川，返回拉萨'],evening:['拉萨休息']};a[11].alternatives=['身体不适则取消高海拔活动'];}else a=a.concat(clone(BASE.slice(16,19)));a[11].notes=(a[11].notes||[]).concat(['D12分流：根据身体、天气、道路和疲劳情况决定是否继续珠峰；不适不继续上升。']);var end=clone(BASE[19]);end.route='拉萨—杭州返程';end.drivingRaw='飞机';end.slots={morning:['按航班时间返程'],noon:[],afternoon:[],evening:[]};a.push(end);return a}
+
 function uid(){return 'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
 function sid(name){var n=0;for(var i=0;i<name.length;i++)n=(n*131+name.charCodeAt(i))%100000007;return 's'+('00000000'+n.toString(16)).slice(-8)}
 
 function defaultDays(){
-  var arr=clone(BASE);
+  var arr=scheme()==='original'?clone(BASE):route3();
   var tg=get('toggles',clone(DEFAULT_TOGGLES));
   // 默认模块修正：按开关重新应用一次（开关状态与默认行程一致时无副作用）
-  arr=applyToggles(arr,tg);
+  arr=scheme()==='original'?applyToggles(arr,tg):applySingle(arr,'dingjie',tg.dingjie);
   return renumber(arr);
 }
 function toggles(){var t=get('toggles',null);if(!t){t=clone(DEFAULT_TOGGLES);set('toggles',t)}return Object.assign(clone(DEFAULT_TOGGLES),t,{flex:get('flex',0)})}
 function setToggle(key,val){
-  var t=toggles();if(key==='flex')set('flex',Math.max(0,C.num(val)));else t[key]=key==='namtso'?true:!!val;
+  if(scheme()!=='original'&&key!=='dingjie'&&key!=='flex')return current();var t=toggles();if(key==='flex')set('flex',Math.max(0,C.num(val)));else t[key]=key==='namtso'?true:!!val;
   set('toggles',t);
   var arr=current();arr=applySingle(arr,key,t[key]);set('days',renumber(arr));
   return current();
@@ -206,12 +211,12 @@ function removeFlex(count){
 function baseBudget(){var b=0;(window.BUDGET||[]).forEach(function(x){b+=C.num(x.qty)*C.num(x.price)*100});return b}
 function budget(){return 0;}
 function km(){var k=0;current().forEach(function(d){var m=String(d.drivingRaw||'').match(/(\d+)\s*[–-]\s*(\d+)\s*km|(\d+)\s*km/);if(m)k+=C.num(m[3]||m[2])});return k}
-function nights(){var n=0;current().forEach(function(d){if(d.lodging&&!/火车/.test(d.lodging))n++});return n}
+function nights(){var n=0;current().forEach(function(d){if(d.lodging&&d.lodging!=='—'&&!/火车/.test(d.lodging))n++});return n}
 function maxAlt(){var a=0;current().forEach(function(d){var v=C.alt(d.lodgingAlt);if(v>a)a=v});return a}
 function spotCount(){var s={};current().forEach(function(d){(d.spots||[]).forEach(function(x){s[x.id]=1})});return Object.keys(s).length}
 function coreSpotCount(){var s={};current().forEach(function(d){(d.spots||[]).forEach(function(x){if((x.tags||[]).indexOf('核心景点')>=0)s[x.id]=1})});return Object.keys(s).length}
 
-window.Plan={PK:PK,DEFAULT_TOGGLES:DEFAULT_TOGGLES,current:current,save:save,renumber:renumber,reset:reset,
+window.Plan={scheme:scheme,selectScheme:selectScheme,PK:PK,DEFAULT_TOGGLES:DEFAULT_TOGGLES,current:current,save:save,renumber:renumber,reset:reset,
   toggles:toggles,setToggle:setToggle,applyToggles:applyToggles,byDayCode:byDayCode,
   addDay:addDay,removeDay:removeDay,moveDay:moveDay,updateDay:updateDay,
   addSpot:addSpot,removeSpot:removeSpot,updateSpot:updateSpot,moveSpot:moveSpot,reorderSpot:reorderSpot,insertFlex:insertFlex,removeFlex:removeFlex,

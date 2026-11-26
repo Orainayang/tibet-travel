@@ -7,7 +7,8 @@ var state={view:'home',ledgerTab:'expenses',memberDetail:null,query:'',filter:'�
   openDays:{},filters:{},drag:null};
 var DAYS=[];
 function days(){return DAYS}
-function record(day){var r=C.getStore().records||{};return r[day]||{}}
+function recordKey(day){return P.scheme()==='original'?day:P.scheme()+':'+day}
+function record(day){day=recordKey(day);var r=C.getStore().records||{};return r[day]||{}}
 function isOpen(day){return !!state.openDays[day]}
 function rebuild(){F.ensurePlan();DAYS=P.current();DAYS.forEach(function(d){d.week=C.weekday(d.date)})}
 
@@ -34,7 +35,7 @@ function render(){
       html+=window.AA.html(state.ledgerTab);
       break;
   }
-  main.innerHTML=html;
+  main.innerHTML=(['home','itinerary','ledger'].includes(state.view)?'':(['guide','safety','map','altitude','modules'].includes(state.view)?V.schemePanel():''))+html;
   document.querySelectorAll('[data-nav]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-nav')===state.view)});
   document.querySelectorAll('.mobile-nav [data-nav]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-nav')===mobileKey())});
   var cd=document.getElementById('headerCountdown');var left=C.daysBetween(C.today(),P.getDeparture());
@@ -237,8 +238,8 @@ document.addEventListener('change',function(e){
     if(d){if(field==='date'&&t.value){var diff=C.daysBetween(d.date,t.value);for(var i=arr.indexOf(d);i<arr.length;i++)arr[i].date=C.dateAdd(arr[i].date,diff)}
       else d[field]=t.value;P.save(arr);render()}return}
   if(t.getAttribute&&t.getAttribute('data-move-spot')&&t.value){P.moveSpot(t.getAttribute('data-from'),t.getAttribute('data-move-spot'),t.value,0);C.toast('景点已移动到 '+t.value);render();return}
-  if(t.getAttribute&&t.getAttribute('data-record-photo')){var day=t.getAttribute('data-record-photo');resizeImage(t.files[0],function(data){var all=C.getStore().records||{},one=all[day]||{};one.photo=data;all[day]=one;var s=C.getStore();s.records=all;C.saveSettings(s);render()});return}
-  if(t.getAttribute&&t.getAttribute('data-record')){var day2=t.getAttribute('data-day'),all2=C.getStore().records||{},one2=all2[day2]||{};one2[t.getAttribute('data-record')]=t.type==='checkbox'?t.checked:t.value;all2[day2]=one2;var s2=C.getStore();s2.records=all2;C.saveSettings(s2);return}
+  if(t.getAttribute&&t.getAttribute('data-record-photo')){var day=recordKey(t.getAttribute('data-record-photo'));resizeImage(t.files[0],function(data){var all=C.getStore().records||{},one=all[day]||{};one.photo=data;all[day]=one;var s=C.getStore();s.records=all;C.saveSettings(s);render()});return}
+  if(t.getAttribute&&t.getAttribute('data-record')){var day2=recordKey(t.getAttribute('data-day')),all2=C.getStore().records||{},one2=all2[day2]||{};one2[t.getAttribute('data-record')]=t.type==='checkbox'?t.checked:t.value;all2[day2]=one2;var s2=C.getStore();s2.records=all2;C.saveSettings(s2);return}
   if(t.id==='dayFilter'){state.filter=t.value;render();return}
   if(t.id==='dayJump'&&t.value){var target=t.value;state.query='';state.filter='全部';state.openDays[target]=true;render();var jump=document.getElementById('dayJump');if(jump)jump.value=target;var node=document.getElementById('day-'+target);if(node){node.style.scrollMarginTop='90px';node.scrollIntoView({behavior:'smooth',block:'start'})}return}
   ['fMember','fCat','fPayer','fScope','fDate'].forEach(function(id){if(t.id===id){var map={fMember:'member',fCat:'cat',fPayer:'payer',fScope:'scope',fDate:'date'};state.filters[map[id]]=t.value;render()}});
@@ -249,7 +250,7 @@ document.addEventListener('input',function(e){
     window.__footTimer=setTimeout(function(){F.update(sid,Object.fromEntries([[f,v]]))},400)}
   var rf=e.target.getAttribute&&e.target.getAttribute('data-record');
   if(rf&&e.target.type==='text'){clearTimeout(window.__recTimer);var day=e.target.getAttribute('data-day'),field=rf,val=e.target.value;
-    window.__recTimer=setTimeout(function(){var a=C.getStore().records||{},o=a[day]||{};o[field]=val;a[day]=o;var s=C.getStore();s.records=a;C.saveSettings(s)},400)}
+    window.__recTimer=setTimeout(function(){var a=C.getStore().records||{},o=a[recordKey(day)]||{};o[field]=val;a[recordKey(day)]=o;var s=C.getStore();s.records=a;C.saveSettings(s)},400)}
   if(e.target.id==='daySearch'){state.query=e.target.value;clearTimeout(window.__s);window.__s=setTimeout(function(){render();var i=document.getElementById('daySearch');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length)}},260)}
   if(e.target.id==='expSearch'){state.filters.q=e.target.value;clearTimeout(window.__e);window.__e=setTimeout(function(){render();var i=document.getElementById('expSearch');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length)}},300)}
 });

@@ -57,12 +57,12 @@ function home(days){
    '<div class="grid stat-grid">'+stats.map(function(s){return '<div class="stat"><div class="label">'+s[0]+'</div><div class="value">'+esc(s[1])+' <small>'+esc(s[2])+'</small></div><div class="hint">'+esc(s[3])+'</div></div>'}).join('')+'</div></div>'+
    overview(days)+'<div class="section"><div class="section-head"><h2>整体路线地图</h2><button class="btn sm" data-nav="map">打开地图 →</button></div>'+mapSVG(days)+'</div>'+
    '<div class="section"><div class="section-head"><h2>快捷入口</h2></div><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">'+
-   [['itinerary','🗓','每日行程与自由编辑'],['footprint','👣','旅行足迹与已完成景点'],['guide','◇','景点优先级与攻略'],['safety','△','海拔、驾驶与安全'],['train','🚄','Z165 青藏铁路观景'],['packing','✅','旅行准备清单'],['mine','☰','我的设置与数据备份'],['ledger','¥','旅行账本'],['ledger','📒','独立旅行账本']]
+   [['itinerary','🗓','每日行程与自由编辑'],['footprint','👣','旅行足迹与已完成景点'],['guide','◇','景点优先级与攻略'],['safety','△','海拔、驾驶与安全'],...(P.scheme()==='original'?[['train','🚄','Z165 青藏铁路观景']]:[]),['packing','✅','旅行准备清单'],['mine','☰','我的设置与数据备份'],['ledger','¥','旅行账本'],['ledger','📒','独立旅行账本']]
    .map(function(x){return '<button class="card" style="text-align:left;cursor:pointer" data-nav="'+x[0]+'"><div style="font-size:24px">'+x[1]+'</div><b>'+x[2]+'</b></button>'}).join('')+'</div></div>'+
    '<div class="section"><div class="section-head"><h2>旅行模块</h2><button class="btn sm" data-nav="modules">查看更多 →</button></div>'+
    '<div class="grid module-grid">'+(window.MODULES||[]).slice(0,4).map(function(m){return moduleCard(m,days)}).join('')+'</div></div>'+
    '<div class="section"><div class="section-head"><h2>出发前必须核实</h2></div><div class="card"><ul class="line-list">'+
-   ['Z165 列车时刻以实际出发日期 12306 公布信息为准。','12月来古冰川开放情况、蓝冰形成情况需提前核实。','纳木措冬季开放、普士拉山口与冰淇淋雪山准确位置待核实。','珠峰小镇实际住宿海拔、然乌湖高海拔住宿条件待核实。',
+   [P.scheme()==='original'?'Z165 列车时刻以12306为准。':'核实黄龙九寨高铁、接驳、冬季开放及返程航班。','12月来古冰川开放情况、蓝冰形成情况需提前核实。','纳木措冬季开放、普士拉山口与冰淇淋雪山准确位置待核实。','珠峰小镇实际住宿海拔、然乌湖高海拔住宿条件待核实。',
     '冬季道路结冰与交通管制随时变化；高海拔应根据身体状态决定是否继续，不为维持天数强行赶路。'].map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul></div></div></section>';
 }
 
@@ -313,13 +313,10 @@ function altitudeView(days){
 function budgetView(){return window.LedgerViews.ledgerHome(P.current());}
 
 function packingView(){
-  var done=C.getStore().packing||{};
-  return '<section class="view"><div class="section-head"><h2>旅行准备清单</h2></div><p class="muted small">勾选状态自动保存在本机。</p>'+
-   (window.PACKING||[]).map(function(g){var n=g.items.filter(function(it){return done[g.id+'::'+it]}).length;
-     return '<div class="card check-group"><div class="between"><b>'+esc(g.group)+'</b><span class="chip '+(n===g.items.length?'onroute':'')+'">'+n+' / '+g.items.length+'</span></div>'+
-      g.items.map(function(it){var k=g.id+'::'+it;return '<label class="check-item '+(done[k]?'done':'')+'"><input type="checkbox" data-check="'+esc(k)+'" '+(done[k]?'checked':'')+'><span>'+esc(it)+'</span></label>'}).join('')+'</div>'}).join('')+'</section>';
+ var done=C.getStore().packing||{},sc=P.scheme(),groups=(window.PACKING38||[]).map(g=>({id:g.id,group:g.group,items:g.items.filter(i=>i.scope==='all'||i.scope.includes(sc==='original'?'a':sc==='3a'?'b':'c'))}));
+ var all=groups.flatMap(g=>g.items.map(i=>({i:i,k:g.id+'::'+i.name}))),n=all.filter(x=>done[x.k]).length,required=all.filter(x=>x.i.level==='必备'),rn=required.filter(x=>done[x.k]).length;
+ return '<section class="view pack38"><div class="packhero"><small>WINTER TRAVEL · PREPARATION</small><h2>出发准备清单</h2><p>按当前方案显示 · 勾选自动保存 · 数量为建议，可按洗衣条件调整</p><div class="packstats"><div><strong id="packTotal">'+n+' / '+all.length+'</strong><small>全部事项</small></div><div><strong id="packRequired">'+rn+' / '+required.length+'</strong><small>必备事项</small></div></div><progress id="packProgress" max="'+all.length+'" value="'+n+'"></progress></div>'+schemePanel()+'<div class="packtools"><label><input type="checkbox" id="packPending"> 只看未完成</label><span>必备优先 · 推荐按需补充</span></div>'+groups.map(g=>'<div class="card check-group packgroup"><div class="between"><b>'+esc(g.group)+'</b><span class="chip packcount">'+g.items.filter(i=>done[g.id+'::'+i.name]).length+' / '+g.items.length+'</span></div>'+g.items.map(i=>{var k=g.id+'::'+i.name;return '<label class="check-item packitem '+(done[k]?'done':'')+'"><input type="checkbox" data-check="'+esc(k)+'" data-level="'+i.level+'" '+(done[k]?'checked':'')+'><span><b>'+esc(i.name)+'</b><small>'+esc(i.note)+'</small></span><em class="packlevel '+(i.level==='必备'?'essential':'')+'">'+i.level+'</em></label>'}).join('')+'</div>').join('')+'</section>';
 }
-
 /* ---------- 我的 ---------- */
 function mineView(days){
   var t=P.toggles(),fs=F.stats(days);

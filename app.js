@@ -230,7 +230,7 @@ document.addEventListener('change',function(e){
   if(t.id==='ledgerMe'){Store.set('ledger.me',t.value);render();return}
   if(t.id==='restoreFile'&&t.files[0]){var r=new FileReader();r.onload=function(){try{var data=JSON.parse(r.result),res=data.version===2?Ex.fullRestore(data):L.restore(data);C.toast(res.ok?'数据已恢复':res.error);render()}catch(err){C.toast('备份文件解析失败')}};r.readAsText(t.files[0]);return}
   if(t.getAttribute&&t.getAttribute('data-module-toggle')){P.setToggle(t.getAttribute('data-module-toggle'),t.checked);C.toast('行程已更新');render();return}
-  if(t.getAttribute&&t.getAttribute('data-check')){var st=C.getStore(),pk=st.packing||{};pk[t.getAttribute('data-check')]=t.checked;st.packing=pk;C.saveSettings(st);t.closest('.check-item').classList.toggle('done',t.checked);return}
+  if(t.getAttribute&&t.getAttribute('data-check')){var st=C.getStore(),pk=st.packing||{};pk[t.getAttribute('data-check')]=t.checked;st.packing=pk;C.saveSettings(st);t.closest('.check-item').classList.toggle('done',t.checked);if(window.refreshPack38)window.refreshPack38();return}
   if(t.getAttribute&&t.getAttribute('data-foot-photo')){resizeImage(t.files[0],function(data){F.addPhoto(t.getAttribute('data-foot-photo'),data);C.toast('照片已保存到本机');render()});return}
   if(t.getAttribute&&t.getAttribute('data-foot')){F.update(t.getAttribute('data-spot'),Object.fromEntries([[t.getAttribute('data-foot'),t.value]]));return}
   if(t.getAttribute&&t.getAttribute('data-dayfield')){

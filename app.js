@@ -141,7 +141,7 @@ function cfgFromForm(){
 function doAction(el){
   var a=el.getAttribute('data-action');
   switch(a){
-   case 'save-departure':{var i=document.getElementById('departureInput');if(i&&i.value){var st=C.getStore();st.departure=i.value;C.saveSettings(st);C.toast('计划日期已更新；实际消费日期不受影响');render()}break}
+   case 'save-departure':{var i=document.getElementById('departureInput');if(i&&i.value){P.setDeparture(i.value);C.toast('计划日期已更新；实际消费日期不受影响');render()}break}
    case 'save-budget':saveBudget();break;
    case 'toggle-day':{var d=el.getAttribute('data-day');state.openDays[d]=!state.openDays[d];var b=document.querySelector('[data-body="'+d+'"]');if(b)b.classList.toggle('hidden');
      var h=el.querySelector('.muted.small');if(h)h.textContent=state.openDays[d]?'收起 ↑':'展开 ↓';break}

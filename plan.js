@@ -7,11 +7,20 @@ var DEFAULT_TOGGLES={chaka:false,glacier:true,midui:false,dingjie:true,namtso:tr
 var PK='plan.v2.';
 function clone(o){return JSON.parse(JSON.stringify(o))}
 function scheme(){return Store.get(PK+'scheme','original')}
-function get(k,def){return Store.get(PK+(scheme()==='original'||k==='departure'?'':scheme()+'.')+k,def)}
-function set(k,v){return Store.set(PK+(scheme()==='original'||k==='departure'?'':scheme()+'.')+k,v)}
+function get(k,def){return Store.get(PK+(scheme()==='original'?'':scheme()+'.')+k,def)}
+function set(k,v){return Store.set(PK+(scheme()==='original'?'':scheme()+'.')+k,v)}
 function selectScheme(v){if(!['original','3a','3b'].includes(v))return current();Store.set(PK+'scheme',v);return current()}
 function newDay(route,lodging,alt,slots,notes){return {moduleKey:'flight3',route:route,lodging:lodging,lodgingAlt:alt,drivingRaw:'飞机',intensity:'低',spots:[],slots:{morning:[slots],noon:[],afternoon:[],evening:['休息']},notes:notes,alternatives:['身体不适时减少活动']}}
-function route3(){var a=[newDay('杭州—成都','成都','500','按航班时间出发',['航班待确认']),newDay('成都—林芝','林芝','2900','抵达后入住休息',['初次进藏，避免剧烈活动']),newDay('林芝休整—尼洋河周边','林芝','2900','自然醒，视身体状态轻度散步',['持续不适不继续上升'])];a[2].drivingRaw='市区交通';a=a.concat(clone(BASE.slice(7,16)));a[3].route='林芝—色季拉山口—鲁朗';a[3].drivingRaw='70–90km / 2–3h';a[3].slots={morning:['身体适应良好再出发'],noon:['色季拉山口短暂停留'],afternoon:['鲁朗林海、鲁朗小镇'],evening:['入住鲁朗']};a[3].notes=['色季拉山口约4728m；不适则留林芝'];a[3].alternatives=['必要时增加林芝休整日'];a[9].route='拉萨休整—布达拉宫—大昭寺—八廓街';a[9].spots=clone(BASE[4].spots.concat(BASE[6].spots.slice(0,1)));a[9].slots={morning:['休息，视体力看布达拉宫'],noon:['休息'],afternoon:['八廓街、大昭寺外观'],evening:['早点休息']};a[11].route='拉萨—羊卓雍措—卡若拉冰川—满拉水库—日喀则';if(scheme()==='3a'){a[11].route='拉萨—羊卓雍措—卡若拉冰川—拉萨';a[11].lodging='拉萨';a[11].lodgingAlt='3650';a[11].drivingRaw='300–350km / 6–8h';a[11].spots=a[11].spots.slice(0,2);a[11].slots={morning:['羊卓雍措'],noon:['途中休息'],afternoon:['卡若拉冰川，返回拉萨'],evening:['拉萨休息']};a[11].alternatives=['身体不适则取消高海拔活动'];}else a=a.concat(clone(BASE.slice(16,19)));a[11].notes=(a[11].notes||[]).concat(['D12分流：根据身体、天气、道路和疲劳情况决定是否继续珠峰；不适不继续上升。']);var end=clone(BASE[19]);end.route='拉萨—杭州返程';end.drivingRaw='飞机';end.slots={morning:['按航班时间返程'],noon:[],afternoon:[],evening:[]};a.push(end);return a}
+function route3(){
+ function spot(name,category,core){return {id:sid(name),name:name,category:category,tags:[core?'核心景点':'顺路景点','冬季待确认'],imageKey:'',visitTime:'视实际情况',onRoute:true,worth:core,description:'冬季开放及实际观景条件待确认。',highlights:[]}}
+ function day(route,lodging,alt,drive,max,spots,notes,slots){return {moduleKey:'flight3',route:route,lodging:lodging,lodgingAlt:String(alt),drivingRaw:drive,maxAltitude:max,intensity:/7–|8–/.test(drive)?'高':'中',spots:spots||[],notes:notes||[],alternatives:['身体不适或道路不安全时调整或取消'],slots:{morning:[slots||'按实际路况安排'],noon:['途中休息'],afternoon:['按体力游览'],evening:['入住休息']}}}
+ function base(i,patch){return Object.assign(clone(BASE[i]),patch)}
+ var a=[day('杭州—成都','成都',500,'飞机',500,[],['抵达成都后休息']),day('成都—黄龙九寨站—黄龙景区—九寨沟','九寨沟',2000,'高铁＋汽车 / 4–5h',3576,[spot('黄龙','高山湖泊',true)],['早班高铁；索道及冬季开放待确认'],'早上成都出发'),day('九寨沟景区—成都','成都',500,'汽车＋高铁 / 3–4h',3100,[spot('九寨沟','高山湖泊',true)],['按返程高铁倒推离园时间，务必回成都']),day('成都—拉萨（18:00落地）','拉萨',3650,'飞机',3650,[],['18:00落地；入住后休息，不安排景点']),day('拉萨休整、适应高原','拉萨',3650,'市区',3650,[],['自然醒；不适不继续上升']),day('拉萨—林芝—尼洋河','林芝',2900,'5–6h',null,[spot('尼洋河','高原峡谷',false)],['走主路，实际最高海拔待核实'])];
+ a.push(base(7,{route:'林芝—色季拉山口—鲁朗林海',drivingRaw:'70–90km / 2–3h',maxAltitude:4728,slots:{morning:['林芝出发'],noon:['色季拉山口'],afternoon:['鲁朗林海'],evening:['鲁朗休息']}}),base(8,{maxAltitude:3300}),base(9,{maxAltitude:4300,notes:['蓝冰与开放待确认；米堆冰川作为替代，不同时赶两座冰川']}),base(10,{route:'波密—鲁朗—雅鲁藏布江—索松村',maxAltitude:4728}),base(11,{route:'索松村—南迦巴瓦峰—雅鲁藏布大峡谷—雅尼湿地—巴松措',lodging:'结巴村',maxAltitude:3500}),base(12,{route:'巴松措—结巴村—拉萨',maxAltitude:null}),base(6,{route:'拉萨—布达拉宫—大昭寺—八廓街',spots:clone(BASE[6].spots.concat(BASE[4].spots.slice(0,2))),maxAltitude:3750}),base(14,{route:'拉萨—念青唐古拉山—那根拉山口—纳木措南岸—拉萨',drivingRaw:'440–500km / 8–10h',maxAltitude:5190}),day('拉萨休整、天气机动及B/C决策','拉萨',3650,'市区',3650,[],['12月24日根据身体、天气、道路决定是否继续珠峰']));
+ if(scheme()==='3a')a.push(base(15,{route:'拉萨—羊卓雍措—卡若拉冰川—拉萨',lodging:'拉萨',lodgingAlt:'3650',drivingRaw:'300–350km / 6–8h',maxAltitude:5036,spots:clone(BASE[15].spots.slice(0,2)),slots:{morning:['羊卓雍措'],noon:['途中休息'],afternoon:['卡若拉冰川，返回拉萨'],evening:['拉萨休息']}}));
+ else a.push(base(15,{route:'拉萨—羊卓雍措—卡若拉冰川—满拉水库—日喀则',maxAltitude:5036}),base(16,{maxAltitude:5210}),base(17,{route:'珠峰小镇—马卡鲁峰观景—十万沙丘—阿玛直米雪山—定结',drivingRaw:'待核实',maxAltitude:null,spots:[spot('马卡鲁峰','雪山',true),clone(BASE[17].spots.find(s=>s.name==='十万沙丘')||spot('十万沙丘','高原峡谷',true)),spot('阿玛直米雪山','雪山',true)],notes:['正式保留小众雪山群；具体坐标、道路及车程待核实'],alternatives:['宗措湖、冰淇淋雪山、普士拉山口仅顺路且安全时安排'],slots:{morning:['马卡鲁峰观景'],noon:['十万沙丘'],afternoon:['阿玛直米雪山'],evening:['定结休息']}}),base(18,{maxAltitude:null}));
+ a.push(day('拉萨—返程','—','—','飞机',null,[],['返程航班待确认；预留12月30–31日']));return a;
+}
 
 function uid(){return 'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
 function sid(name){var n=0;for(var i=0;i<name.length;i++)n=(n*131+name.charCodeAt(i))%100000007;return 's'+('00000000'+n.toString(16)).slice(-8)}
@@ -32,13 +41,13 @@ function setToggle(key,val){
 }
 function current(){
   var arr=get('days',null);
-  if(get('revision',0)!==20261125){if(Array.isArray(arr))set('backupBeforeFinal20',arr);set('revision',20261125);set('toggles',clone(DEFAULT_TOGGLES));arr=null;}
+  if(get('revision',0)!==(scheme()==='original'?20261125:20261127)){if(Array.isArray(arr))set('backupBeforeFinal20',arr);set('revision',scheme()==='original'?20261125:20261127);if(scheme()!=='original')set('departure','2026-12-10');set('toggles',clone(DEFAULT_TOGGLES));arr=null;}
   if(!Array.isArray(arr)||!arr.length){arr=defaultDays();set('days',arr)}
   return renumber(clone(arr));
 }
 function save(arr){set('days',renumber(clone(arr)));return current()}
 function renumber(arr){
-  var dep=get('departure','2026-12-15');
+  var dep=get('departure',scheme()==='original'?'2026-12-15':'2026-12-10');
   arr.forEach(function(d,i){d.index=i+1;d.day='D'+(i+1);d.date=C.dateAdd(dep,i);
     if(!d.slots)d.slots={morning:[],noon:[],afternoon:[],evening:[]};
     d.spots=(d.spots||[]).map(function(s){if(!s.id)s.id=sid(s.name);return s});
@@ -111,7 +120,7 @@ function applySingle(arr,key,on){
   }
   if(key==='dingjie'){
     var i=arr.findIndex(function(d){return d.moduleKey==='dingjie'||d.moduleKey==='dingjieSkip'});
-    if(i>=0){if(on&&arr[i].moduleKey==='dingjieSkip'){arr[i]=clone(BASE[17]);arr[i+1]=clone(BASE[18]);}else if(!on&&arr[i].moduleKey==='dingjie'){arr[i]=Object.assign(clone(BASE[17]),{moduleKey:'dingjieSkip',route:'珠峰小镇—日喀则',lodging:'日喀则',lodgingAlt:'3840',drivingRaw:'约300–350km / 6–8h',spots:[],slots:{morning:['珠峰小镇出发'],noon:['途中休息'],afternoon:['返回日喀则'],evening:['休息']},notes:['取消定结，降低住宿海拔'],alternatives:['必要时补游珠峰']});arr[i+1]=Object.assign(clone(BASE[18]),{route:'日喀则—拉萨',drivingRaw:'270km / 4–5h',notes:['返回拉萨'],alternatives:[],slots:{morning:['日喀则出发'],noon:['途中休息'],afternoon:['抵达拉萨'],evening:['休息']}});}}
+    if(i>=0){if(on&&arr[i].moduleKey==='dingjieSkip'){var src=scheme()==='original'?BASE:route3();arr[i]=clone(scheme()==='original'?src[17]:src[17]);arr[i+1]=clone(src[18]);}else if(!on&&arr[i].moduleKey==='dingjie'){arr[i]=Object.assign(clone(BASE[17]),{moduleKey:'dingjieSkip',route:'珠峰小镇—日喀则',lodging:'日喀则',lodgingAlt:'3840',drivingRaw:'约300–350km / 6–8h',spots:[],slots:{morning:['珠峰小镇出发'],noon:['途中休息'],afternoon:['返回日喀则'],evening:['休息']},notes:['取消定结，降低住宿海拔'],alternatives:['必要时补游珠峰']});arr[i+1]=Object.assign(clone(BASE[18]),{route:'日喀则—拉萨',drivingRaw:'270km / 4–5h',notes:['返回拉萨'],alternatives:[],slots:{morning:['日喀则出发'],noon:['途中休息'],afternoon:['抵达拉萨'],evening:['休息']}});}}
   }
   if(key==='namtso'){
     on=true;
@@ -220,7 +229,7 @@ window.Plan={scheme:scheme,selectScheme:selectScheme,PK:PK,DEFAULT_TOGGLES:DEFAU
   toggles:toggles,setToggle:setToggle,applyToggles:applyToggles,byDayCode:byDayCode,
   addDay:addDay,removeDay:removeDay,moveDay:moveDay,updateDay:updateDay,
   addSpot:addSpot,removeSpot:removeSpot,updateSpot:updateSpot,moveSpot:moveSpot,reorderSpot:reorderSpot,insertFlex:insertFlex,removeFlex:removeFlex,
-  getDeparture:function(){return get('departure','2026-12-15')},
+  getDeparture:function(){return get('departure',scheme()==='original'?'2026-12-15':'2026-12-10')},
   setDeparture:function(v){set('departure',v);var a=current();a.forEach(function(d,i){d.date=C.dateAdd(v,i)});set('days',a)},
   budget:budget,km:km,nights:nights,maxAlt:maxAlt,spotCount:spotCount,coreSpotCount:coreSpotCount};
 })();
